@@ -340,18 +340,25 @@ class HTML_Page2 extends HTML_Common {
      * <p>Accepts an array of attributes</p>
      * 
      * <p><b>General options:</b></p>
-     *     - "lineend" => "unix|win|mac" (Sets line ending style; defaults to unix.)
+     *     - "lineend" => "unix|win|mac" (Sets line ending style; defaults to 
+     *        unix.) See also {@link setLineEnd}. 
      *     - "tab"     => string (Sets line ending style; defaults to \t.)
-     *     - "cache"   => "false|true"
-     *     - "charset" => charset string (Sets charset encoding; defaults to utf-8)
-     *     - "mime"    => mime encoding string (Sets document mime type; defaults to text/html)
+     *        See also {@link setTab}. 
+     *     - "cache"   => "false|true"  See also {@link setCache}. 
+     *     - "charset" => charset string (Sets charset encoding; defaults 
+     *       to utf-8) See also {@link setCharset} and {@link getCharset}. 
+     *     - "mime"    => mime encoding string (Sets document mime type; 
+     *       defaults to text/html)  See also {@link setMimeEncoding}. 
      * <p><b>XHTML specific options:</b></p>
-     *     - "doctype"  => string (Sets XHTML doctype; defaults to XHTML 1.0 Transitional.)
-     *     - "language" => two letter language designation. (Defines global document language; defaults to "en".)
-     *     - "namespace"  => string (Sets document namespace; defaults to the W3C defined namespace.)
+     *     - "doctype"  => string (Sets XHTML doctype; defaults to 
+     *       XHTML 1.0 Transitional.)  See also {@link setDoctype}. 
+     *     - "language" => two letter language designation. (Defines global 
+     *       document language; defaults to "en".) See also {@link setLang}.
+     *     - "namespace"  => string (Sets document namespace; defaults to the 
+     *       W3C defined namespace.) See also {@link setNamespace}. 
      * 
-     * @param   mixed   $attributes     Associative array of table tag attributes
-     *                                  or HTML attributes name="value" pairs
+     * @param   mixed   $attributes     Associative array of table tag 
+     *                                  attributes 
      * @access  public
      * @since   2.0
      */
@@ -401,7 +408,7 @@ class HTML_Page2 extends HTML_Common {
     } // end class constructor
 
     /**
-     * Iterates through an array, returning an HTML string.
+     * Iterates through an array, returning an HTML string
      * 
      * <p>It also handles objects, calling the toHTML or toString methods
      * and propagating the line endings and tabs for objects that
@@ -764,7 +771,7 @@ class HTML_Page2 extends HTML_Common {
     } // end func _parseDoctypeString
     
     /**
-     * Sets the content of the <body> tag.
+     * Sets the content of the <body> tag
      * 
      * <p>If content already exists, the new content is appended.</p>
      *
@@ -818,7 +825,7 @@ class HTML_Page2 extends HTML_Common {
     } // end func addScript
     
     /**
-     * Adds a script to the page.
+     * Adds a script to the page
      *
      * <p>Content can be a string or an object with a toString method.
      * Defaults to text/javascript.</p>
@@ -849,7 +856,7 @@ class HTML_Page2 extends HTML_Common {
     } // end func addStyleSheet
     
     /**
-     * Adds a stylesheet declaration to the page.
+     * Adds a stylesheet declaration to the page
      * 
      * <p>Content can be a string or an object with a toString method.
      * Defaults to text/css.</p>
@@ -865,12 +872,12 @@ class HTML_Page2 extends HTML_Common {
     } // end func addStyleDeclaration
     
     /**
-     * Adds a shortcut icon (favicon).
+     * Adds a shortcut icon (favicon)
      * 
-     * This adds a link to the icon shown in the favorites list or on 
+     * <p>This adds a link to the icon shown in the favorites list or on 
      * the left of the url in the address bar. Some browsers display 
-     * it on the tab, as well.
-     *
+     * it on the tab, as well.</p>
+     * 
      * @access    public
      * @param     string  $href        The link that is being related.
      * @param     string  $type        File type
@@ -882,11 +889,12 @@ class HTML_Page2 extends HTML_Common {
     } // end func addFavicon
 
     /**
-     * Adds <link> tags to the head of the document.
-     * $relType defaults to 'rel' as it is the most common relation type used.
+     * Adds <link> tags to the head of the document
+     * 
+     * <p>$relType defaults to 'rel' as it is the most common relation type used.
      * ('rev' refers to reverse relation, 'rel' indicates normal, forward relation.)
-     * Typical tag: <link href="index.php" rel="Start">
-     *
+     * Typical tag: <link href="index.php" rel="Start"></p>
+     * 
      * @access   public
      * @param    string  $href       The link that is being related.
      * @param    string  $relation   Relation of link.
@@ -998,7 +1006,8 @@ class HTML_Page2 extends HTML_Common {
      * If you wish to use a "safe" version, use {@link addBodyContent}
      * Objects must have a toString method.</p>
      * 
-     * @param mixed    $content   New <body> tag content. May be an object. (may be passed as a reference)
+     * @param mixed    $content   New <body> tag content. May be an object. 
+     *                            (may be passed as a reference)
      * @access public
      */
     function setBody($content)
@@ -1030,9 +1039,11 @@ class HTML_Page2 extends HTML_Common {
     } // end setBodyAttributes
 
     /**
-     * Defines if the document should be cached by the browser. Defaults to false.
+     * Defines if the document should be cached by the browser
      * 
-     * @param string $cache Options are currently 'true' or 'false'. Defaults to 'false'.
+     * <p>Defaults to false.</p>
+     * 
+     * @param  string   $cache  Options are currently 'true' or 'false'
      * @access public
      */
     function setCache($cache = 'false')
@@ -1045,9 +1056,18 @@ class HTML_Page2 extends HTML_Common {
     } // end setCache
     
     /**
-     * Defines if the document should be cached by the browser. Defaults to false.
+     * Sets the document charset
      * 
-     * @param string $cache Options are currently 'true' or 'false'. Defaults to 'false'.
+     * <p>By default, HTML_Page2 uses UTF-8 encoding. This is properly handled 
+     * by PHP, but remember to use the htmlentities attribute for charset so 
+     * that whatever you get from a database is properly handled by the 
+     * browser.</p>
+     * 
+     * <p>The current most popular encoding: iso-8859-1. If it is used,
+     * htmlentities and htmlspecialchars can be used without any special 
+     * settings.</p>
+     * 
+     * @param   string   $type  Charset encoding string
      * @access  public
      * @return  void
      */
@@ -1059,16 +1079,16 @@ class HTML_Page2 extends HTML_Common {
     /**
      * Sets or alters the !DOCTYPE declaration.
      * 
-     * <p>Can be set to "strict",
-     * "transitional" or "frameset". Defaults to "transitional".</p>
+     * <p>Can be set to "strict", "transitional" or "frameset".
+     * Defaults to "XHTML 1.0 Transitional".</p>
      * 
-     * <p>This must come
-     * <i>after</i> declaring the character encoding with {@link setCharset} or directly
-     * when the class is initiated {@link HTML_Page2}.</p>
+     * <p>This must come <i>after</i> declaring the character encoding with
+     * {@link setCharset} or directly when the class is initiated 
+     * {@link HTML_Page2}. Use in conjunction with {@link setMimeEncoding}</p>
      * 
      * <p>Framesets are not yet implemented.</p>
      * 
-     * @param   string   $type  String containing a document type. Defaults to "XHTML 1.0 Transitional"
+     * @param   string   $type  String containing a document type
      * @access  public
      * @return  void
      */
@@ -1081,7 +1101,7 @@ class HTML_Page2 extends HTML_Common {
      * Sets the global document language declaration. Default is English.
      * 
      * @access public
-     * @param string $lang Two-letter language designation.
+     * @param   string   $lang    Two-letter language designation
      */
     function setLang($lang = "en")
     {
@@ -1091,9 +1111,9 @@ class HTML_Page2 extends HTML_Common {
     /**
      * Sets or alters a meta tag.
      * 
-     * @param string  $name     Value of name or http-equiv tag
-     * @param string  $content  Value of the content tag
-     * @param bool    $http_equiv     META type "http-equiv" defaults to NULL
+     * @param string  $name           Value of name or http-equiv tag
+     * @param string  $content        Value of the content tag
+     * @param bool    $http_equiv     META type "http-equiv" defaults to null
      * @return void
      * @access public
      */
@@ -1113,8 +1133,8 @@ class HTML_Page2 extends HTML_Common {
     /**
      * Unsets a meta tag.
      *
-     * @param string  $name     Value of name or http-equiv tag
-     * @param bool    $http_equiv     META type "http-equiv" defaults to NULL
+     * @param string  $name           Value of name or http-equiv tag
+     * @param bool    $http_equiv     META type "http-equiv" defaults to null
      * @return void
      * @access public
      */
@@ -1139,14 +1159,16 @@ class HTML_Page2 extends HTML_Common {
     } // end func setMetaContentType
     
     /**
-     * Easily sets or alters a refresh meta tag. 
+     * Shortcut to set or alter a refresh meta tag 
      * 
      * <p>If no $url is passed, "self" is presupposed, and the appropriate URL
-     * will be automatically generated.</p>
+     * will be automatically generated. In this case, an optional third 
+     * boolean parameter enables https redirects to self.</p>
      * 
      * @param int     $time    Time till refresh (in seconds)
      * @param string  $url     Absolute URL or "self"
-     * @param bool    $https   If $url = self, this allows for the https protocol defaults to NULL
+     * @param bool    $https   If $url == self, this allows for the https 
+     *                         protocol defaults to null
      * @return void
      * @access public
      */
@@ -1165,6 +1187,36 @@ class HTML_Page2 extends HTML_Common {
     
     /**
      * Sets the document MIME encoding that is sent to the browser.
+     * 
+     * <p>This usually will be text/html because most browsers cannot yet  
+     * accept the preferred mime settings for XHTML: application/xhtml+xml 
+     * and to a lesser extent text/xml. Here is a possible way of 
+     * automatically including the proper mime type for XHTML 1.0 if the 
+     * requesting browser supports it:</p>
+     * 
+     * <code>
+     * <?php
+     * // Initialize the HTML_Page2 object:
+     * require 'HTML/Page2.php';
+     * $page = new HTML_Page2();
+     * 
+     * // Check if browse can take the proper mime type
+     * if ( strpos($_SERVER['HTTP_ACCEPT'], 'application/xhtml+xml') ) {
+     *     $page->setDoctype('XHTML 1.0 Strict');
+     *     $page->setMimeEncoding('application/xhtml+xml');
+     * } else {
+     *     // HTML that qualifies for XHTML 1.0 Strict automatically
+     *     // also complies with XHTML 1.0 Transitional, so if the
+     *     // requesting browser doesn't take the necessary mime type
+     *     // for XHTML 1.0 Strict, let's give it what it can take.
+     *     $page->setDoctype('XHTML 1.0 Transitional');
+     * }
+     * 
+     * // finish building your page here..
+     * 
+     * $page->display();
+     * ?>
+     * </code>
      * 
      * @param    string    $type
      * @access   public
