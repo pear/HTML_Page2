@@ -672,7 +672,7 @@ class HTML_Page2 extends HTML_Common {
                 
                 // This is for full XHTML support.
                 if ($this->_mime == 'text/html' ) {
-                    $strHtml .= $tab . $tab . '<!--' . $lnEnd;
+                    $strHtml .= $tab . $tab . '// <!--' . $lnEnd;
                 } else {
                     $strHtml .= $tab . $tab . '<![CDATA[' . $lnEnd;
                 }
@@ -700,9 +700,9 @@ class HTML_Page2 extends HTML_Common {
                 
                 // See above note
                 if ($this->_mime == 'text/html' ) {
-                    $strHtml .= $tab . $tab . '//-->' . $lnEnd;
+                    $strHtml .= $tab . $tab . '// -->' . $lnEnd;
                 } else {
-                    $strHtml .= $tab . $tab . ']]>' . $lnEnd;
+                    $strHtml .= $tab . $tab . '// ]]>' . $lnEnd;
                 }
                 $strHtml .= $tab . '</script>' . $lnEnd;
             }
