@@ -64,6 +64,9 @@ require_once 'PEAR.php';
  * 
  * <p>HTML/Page2/Namespaces.php is required in private method 
  * _getNamespace()</p>
+ * 
+ * <p>HTML/Page2/Frameset.php is optionally required in method setDoctype() if 
+ * the doctype variant is frameset.</p>
  */
 require_once 'HTML/Common.php';
 
@@ -364,6 +367,15 @@ class HTML_Page2 extends HTML_Common {
     var $_xmlProlog = true;
     
     /**
+     * Contains an instance of {@see HTML_Page2_Frameset}
+     * 
+     * @var     object
+     * @access  public
+     * @since   2.0
+     */
+    var $frameset;
+    
+    /**
      * Class constructor.
      *
      * <p>Accepts an array of attributes</p>
@@ -473,8 +485,10 @@ class HTML_Page2 extends HTML_Common {
     {
         
         // get the special formatting settings
-        $lnEnd = $this->_getLineEnd();
-        $tab = $this->_getTab();
+        $lnEnd  = $this->_getLineEnd();
+        $tab    = $this->_getTab();
+        $tabs   = $this->_getTabs();
+        $offset = $this->getTabOffset() + 1;
         
         // initialize the variable that will collect our generated HTML
         $strHtml = ''; 
@@ -497,7 +511,7 @@ class HTML_Page2 extends HTML_Common {
                 // Of course, these features are not necessarily implemented
                 // in all HTML_Common-based packages. But at least this makes 
                 // it possible to propagate the settings.
-                $element->setTabOffset(1);
+                $element->setTabOffset($offset);
                 $element->setTab($tab);
                 $element->setLineEnd($lnEnd);
             }
@@ -527,7 +541,7 @@ class HTML_Page2 extends HTML_Common {
         } else { 
             // If we don't have an object or array, we can simply output
             // the element after indenting it and properly ending the line.
-            $strHtml .= $tab . $element . $lnEnd;
+            $strHtml .= $tabs . $tab . $element . $lnEnd;
         }
         
         return $strHtml;
@@ -545,27 +559,45 @@ class HTML_Page2 extends HTML_Common {
         
         // get line endings
         $lnEnd = $this->_getLineEnd();
+        $tabs = $this->_getTabs();
         
         // If body attributes exist, add them to the body tag.
         // Many attributes are depreciated because of CSS.
         $strAttr = $this->_getAttrString($this->_attributes);
         
+        // If this is a frameset, we don't want to output the body tag, but 
+        // rather the <noframes> tag.
+        if ($this->_doctype['variant'] == 'frameset') {
+            $this->_tabOffset++;
+            $tabs = $this->_getTabs();
+            $strHtml = $tabs . '<noframes>' . $lnEnd;
+            $this->_tabOffset++;
+            $tabs = $this->_getTabs();
+        }
+        
         if ($strAttr) {
-            $strHtml = "<body $strAttr>" . $lnEnd;
+            $strHtml .= $tabs . "<body $strAttr>" . $lnEnd;
         } else {
-            $strHtml = '<body>' . $lnEnd;
+            $strHtml .= $tabs . '<body>' . $lnEnd;
         }
 
         // Allow for mixed content in the body array, recursing into inner
         // array serching for non-array types.
         $strHtml .= $this->_elementToHtml($this->_body);
-
+        
         // Close tag
-        $strHtml .= '</body>' . $lnEnd;
-
+        $strHtml .= $tabs . '</body>' . $lnEnd;
+        
+        // See above comment for frameset usage
+        if ($this->_doctype['variant'] == 'frameset') {
+            $this->_tabOffset--;
+            $strHtml .= $this->_getTabs() . '</noframes>' . $lnEnd;
+            $this->_tabOffset--;
+        }
+        
         // Let's roll!
         return $strHtml;
-    } // end func _generateHead
+    } // end func _generateBody
     
     /**
      * Generates the HTML string for the <head> tag
@@ -585,34 +617,35 @@ class HTML_Page2 extends HTML_Common {
         // get line endings
         $lnEnd = $this->_getLineEnd();
         $tab = $this->_getTab();
+        $tabs = $this->_getTabs();
         
-        $strHtml  = '<head>' . $lnEnd;
+        $strHtml  = $tabs . '<head>' . $lnEnd;
         
         // Generate META tags
         foreach ($this->_metaTags as $type => $tag) {
             foreach ($tag as $name => $content) {
                 if ($type == 'http-equiv') {
-                    $strHtml .= $tab . "<meta http-equiv=\"$name\" content=\"$content\"" . $tagEnd . $lnEnd;
+                    $strHtml .= $tabs . $tab . "<meta http-equiv=\"$name\" content=\"$content\"" . $tagEnd . $lnEnd;
                 } elseif ($type == 'standard') {
-                    $strHtml .= $tab . "<meta name=\"$name\" content=\"$content\"" . $tagEnd . $lnEnd;
+                    $strHtml .= $tabs . $tab . "<meta name=\"$name\" content=\"$content\"" . $tagEnd . $lnEnd;
                 }
             }
         }
-
+        
         // Generate the title tag.
         // Pre-XHTML compatibility:
         //     This comes after meta tags because of possible
         //     http-equiv character set declarations.
-        $strHtml .= $tab . '<title>' . $this->getTitle() . '</title>' . $lnEnd;
+        $strHtml .= $tabs . $tab . '<title>' . $this->getTitle() . '</title>' . $lnEnd;
         
         // Generate link declarations
         foreach ($this->_links as $link) {
-            $strHtml .= $tab . $link . $tagEnd . $lnEnd;
+            $strHtml .= $tabs . $tab . $link . $tagEnd . $lnEnd;
         }
         
         // Generate stylesheet links
         foreach ($this->_styleSheets as $strSrc => $strAttr ) {
-            $strHtml .= $tab . "<link rel=\"stylesheet\" href=\"$strSrc\" type=\"".$strAttr['mime'].'"';
+            $strHtml .= $tabs . $tab . "<link rel=\"stylesheet\" href=\"$strSrc\" type=\"".$strAttr['mime'].'"';
             if (!is_null($strAttr['media'])){
                 $strHtml .= ' media="'.$strAttr['media'].'"';
             }
@@ -622,13 +655,13 @@ class HTML_Page2 extends HTML_Common {
         // Generate stylesheet declarations
         foreach ($this->_style as $styledecl) {
             foreach ($styledecl as $type => $content) {
-                $strHtml .= $tab . '<style type="' . $type . '">' . $lnEnd;
+                $strHtml .= $tabs . $tab . '<style type="' . $type . '">' . $lnEnd;
                 
                 // This is for full XHTML support.
                 if ($this->_mime == 'text/html' ) {
-                    $strHtml .= $tab . $tab . '<!--' . $lnEnd;
+                    $strHtml .= $tabs . $tab . $tab . '<!--' . $lnEnd;
                 } else {
-                    $strHtml .= $tab . $tab . '<![CDATA[' . $lnEnd;
+                    $strHtml .= $tabs . $tab . $tab . '<![CDATA[' . $lnEnd;
                 }
                 
                 if (is_object($content)) {
@@ -654,29 +687,29 @@ class HTML_Page2 extends HTML_Common {
                 
                 // See above note
                 if ($this->_mime == 'text/html' ) {
-                    $strHtml .= $tab . $tab . '-->' . $lnEnd;
+                    $strHtml .= $tabs . $tab . $tab . '-->' . $lnEnd;
                 } else {
-                    $strHtml .= $tab . $tab . ']]>' . $lnEnd;
+                    $strHtml .= $tabs . $tab . $tab . ']]>' . $lnEnd;
                 }
-                $strHtml .= $tab . '</style>' . $lnEnd;
+                $strHtml .= $tabs . $tab . '</style>' . $lnEnd;
             }
         } // end generating stylesheet blocks
         
         // Generate script file links
         foreach ($this->_scripts as $strSrc => $strType) {
-            $strHtml .= $tab . "<script type=\"$strType\" src=\"$strSrc\"></script>" . $lnEnd;
+            $strHtml .= $tabs . $tab . "<script type=\"$strType\" src=\"$strSrc\"></script>" . $lnEnd;
         }
         
         // Generate script declarations
         foreach ($this->_script as $script) {
             foreach ($script as $type => $content) {
-                $strHtml .= $tab . '<script type="' . $type . '">' . $lnEnd;
+                $strHtml .= $tabs . $tab . '<script type="' . $type . '">' . $lnEnd;
                 
                 // This is for full XHTML support.
                 if ($this->_mime == 'text/html' ) {
-                    $strHtml .= $tab . $tab . '// <!--' . $lnEnd;
+                    $strHtml .= $tabs . $tab . $tab . '// <!--' . $lnEnd;
                 } else {
-                    $strHtml .= $tab . $tab . '<![CDATA[' . $lnEnd;
+                    $strHtml .= $tabs . $tab . $tab . '<![CDATA[' . $lnEnd;
                 }
                 
                 if (is_object($content)) {
@@ -702,16 +735,16 @@ class HTML_Page2 extends HTML_Common {
                 
                 // See above note
                 if ($this->_mime == 'text/html' ) {
-                    $strHtml .= $tab . $tab . '// -->' . $lnEnd;
+                    $strHtml .= $tabs . $tab . $tab . '// -->' . $lnEnd;
                 } else {
-                    $strHtml .= $tab . $tab . '// ]]>' . $lnEnd;
+                    $strHtml .= $tabs . $tab . $tab . '// ]]>' . $lnEnd;
                 }
-                $strHtml .= $tab . '</script>' . $lnEnd;
+                $strHtml .= $tabs . $tab . '</script>' . $lnEnd;
             }
         } // end generating script blocks
         
         // Close tag
-        $strHtml .=  '</head>' . $lnEnd;
+        $strHtml .=  $tabs . '</head>' . $lnEnd;
         
         // Let's roll!
         return $strHtml;
@@ -1249,6 +1282,17 @@ class HTML_Page2 extends HTML_Common {
     function setDoctype($type = "XHTML 1.0 Transitional")
     {
         $this->_doctype = $this->_parseDoctypeString($type);
+        if($this->_doctype['variant'] == 'frameset') {
+            
+            $options = array('master' => true);
+            if ($this->_doctype['type'] == 'xhtml') {
+                $options['xhtml'] = true;
+            }
+            
+            // make sure we have the frameset class loaded
+            require_once 'HTML/Page2/Frameset.php';
+            $this->frameset = new HTML_Page2_Frameset($options);
+        }
     } // end func setDoctype
     
     /**
@@ -1528,9 +1572,33 @@ class HTML_Page2 extends HTML_Common {
             $strHtml .= '>' . $lnEnd;
             
         }
-
+        
+        // indent all nodes of <html> one place
+        $this->_tabOffset++;
+        
         $strHtml .= $this->_generateHead();
-        $strHtml .= $this->_generateBody();
+        
+        if ($this->_doctype['variant'] == 'frameset') {
+            
+            // pass on settings to the frameset
+            $this->frameset->setTab($this->_getTab());
+            $this->frameset->setTabOffset($this->getTabOffset());
+            $this->frameset->setLineEnd($lnEnd);
+            
+            $strHtml .= $this->frameset->toHtml();
+            $strHtml .= $this->_generateBody();
+            $strHtml .= $this->_getTabs() . '</frameset>' . $lnEnd;
+            
+        } else {
+            
+            $strHtml .= $this->_generateBody();
+            
+        }
+        
+        // In case something else is going to be done with this object,
+        // let's set the offset back to normal.
+        $this->_tabOffset--;
+        
         $strHtml .= '</html>';
         return $strHtml;
     } // end func toHtml
