@@ -32,7 +32,7 @@ Ideas for use:
   </maintainers>
   <release>
     <version>0.5.0beta</version>
-    <date>2003-05-02</date>
+    <date>2003-06-07</date>
     <state>beta</state>
     <notes>
 This release is completely XHTML compliant, and has some great features:
@@ -57,7 +57,7 @@ Bugfixes (since HTML_Page 2.0.0.RC3)
 * #951 (unset META tag was not possible; now use unsetMetaData)
 * Fixed meta tag, title order for pre-XHTML compatibility
 
-# inline documentation update
+# major inline documentation update
     </notes>
     <filelist>
       <dir name="/" baseinstalldir="HTML">
