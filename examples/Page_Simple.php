@@ -27,11 +27,11 @@ require_once 'HTML/Page2.php';
 //    -> language = en
 //    -> cache = false
 
-$p = new HTML_Page2();
+$page = new HTML_Page2();
  
 // Page title defaults to "New XHTML 1.0 Transitional Compliant Page"
 
-$p->addBodyContent('<h1>Headline</h1>');
-$p->addBodyContent('<p>Copyright 2003 The PHP Group</p>');
-$p->display();
+$page->addBodyContent('<h1>Headline</h1>');
+$page->addBodyContent('<p>Copyright 2003 The PHP Group</p>');
+$page->display();
 ?>

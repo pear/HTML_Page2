@@ -27,12 +27,12 @@ require_once "HTML/Page2.php";
 //    -> language = en
 //    -> cache = false
 
-$p = new HTML_Page2(array('doctype'=>'none'));
+$page = new HTML_Page2(array('doctype'=>'none','tab'=>'  '));
 
 // "simple" Page title defaults to "New Page"
 
-$p->addBodyContent("<h1>Headline</h1>");
-$p->addBodyContent("<p>Some text</p>");
-$p->display ();
+$page->addBodyContent("<h1>Headline</h1>");
+$page->addBodyContent("<p>Some text</p>");
+$page->display ();
 
 ?>

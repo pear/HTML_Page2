@@ -28,7 +28,9 @@ $i = $j = 0;
 for ($R = 0; $R <= 255; $R += 51) {
     for ($G = 0; $G <= 255; $G += 51) {
         for($B = 0; $B <= 255; $B += 51) {
-            $table->setCellAttributes($i, $j, 'style="background-color:#'.sprintf('%02X%02X%02X', $R, $G, $B).';"');
+            $table->setCellAttributes($i, $j, 
+             'style="background-color:#'.strtolower(sprintf('%02X%02X%02X', 
+                                                              $R, $G, $B)).';"');
             $j++;
         }
     }
@@ -46,34 +48,38 @@ for ($R = 0; $R <= 255; $R += 51) {
 //      - language (two letter designator: e.g., "en")
 //      - lineend ("unix", "win", "mac", custom string)
 //      - mime (e.g., "application/xhtml+xml")
-//      - namespace (string)
+//      - namespace (URI)
+//      - profile (URI)
 //      - tab (e.g., "    ")
+//      - disableProlog (bool)
 // All the above have defaults, so it is not necessary
 // to specify everything. For example, the proper namespace
 // is chosen by default.
 
-$p = new HTML_Page2(array ( 
+$page = new HTML_Page2(array ( 
                            'lineend'   => 'unix',
                            'doctype'   => 'XHTML 1.0 Strict',
                            'language'  => 'en',
-                           'cache'     => 'false'
+                           'cache'     => 'false',
+                           'tab'       => '  '
                          ));
  
-// Page title defaults to "New XHTML 1.0 Strict Compliant Page"
-$p->setTitle("HTML_Page2 Color Chart example");
-$p->setMetaData("author", "Klaus Guenther");
+// Page title defaults to "New $doctypeString Compliant Page"
+$page->setTitle("HTML_Page2 Color Chart example");
+$page->setMetaData("author", "Klaus Guenther");
 
 // let's add a Content-Type meta tag
-$p->setMetaContentType();
-
-$p->addBodyContent("<h1>Color Chart</h1>");
+$page->setMetaContentType();
 
 // Objects with toHtml and toString are supported.
-$p->addBodyContent($table);
-$p->addBodyContent('<p>Copyright 2003 The PHP Group</p>');
+$page->addBodyContent($table);
+$page->addBodyContent('<p>Copyright 2003 The PHP Group</p>');
+
+// oops, forgot to add the header:
+$page->addBodyContent("<h1>Color Chart</h1>", HTML_PAGE2_PREPEND);
 
 // output to browser
-$p->display();
+$page->display();
 // or to a file
-//$p->toFile('example.html');
+//$page->toFile('example.html');
 ?>
