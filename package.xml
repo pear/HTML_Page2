@@ -44,13 +44,16 @@ This release is completely XHTML compliant, and has some great features:
 * Global document language
 * Full META tag support, including "http-equiv"
 * Suport for stylesheet and script declarations in the head section
-* Support for linked stylesheets and scripts (including CSS 2.0 media definitions)
+* Support for linked stylesheets and scripts (including CSS 2.0 media specific definitions)
 * Can output directly to a file
+
+Note: This release does not support framesets.
 
 New features:
 * HTML 4.0 doctype support
 * #814 (Feature request: prependBodyContent)
 * addBodyContent now also takes an additional parameter
+* Basic support for multiple script and style generation
 
 Bugfixes (since HTML_Page 2.0.0.RC3)
 * #800 (Output "Object" prior to HTML if doctype is unknown)
@@ -67,9 +70,9 @@ Bugfixes (since HTML_Page 2.0.0.RC3)
             <file role="php" name="Namespaces.php" />
           </dir>
           <dir name="examples">
-            <file role="doc" name="Page_NoDoctype.php" />
-            <file role="doc" name="Page_Simple.php" />
-            <file role="doc" name="Page_Complex.php" />
+            <file role="doc" name="Page2_NoDoctype.php" />
+            <file role="doc" name="Page2_Simple.php" />
+            <file role="doc" name="Page2_Complex.php" />
           </dir>
         </dir>
     </filelist>
