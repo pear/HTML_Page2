@@ -567,12 +567,14 @@ class HTML_Page2 extends HTML_Common {
         
         // If this is a frameset, we don't want to output the body tag, but 
         // rather the <noframes> tag.
-        if ($this->_doctype['variant'] == 'frameset') {
+        if (isset($this->_doctype['variant']) && $this->_doctype['variant'] == 'frameset') {
             $this->_tabOffset++;
             $tabs = $this->_getTabs();
             $strHtml = $tabs . '<noframes>' . $lnEnd;
             $this->_tabOffset++;
             $tabs = $this->_getTabs();
+        } else {
+            $strHtml = '';
         }
         
         if ($strAttr) {
@@ -589,7 +591,7 @@ class HTML_Page2 extends HTML_Common {
         $strHtml .= $tabs . '</body>' . $lnEnd;
         
         // See above comment for frameset usage
-        if ($this->_doctype['variant'] == 'frameset') {
+        if (isset($this->_doctype['variant']) && $this->_doctype['variant'] == 'frameset') {
             $this->_tabOffset--;
             $strHtml .= $this->_getTabs() . '</noframes>' . $lnEnd;
             $this->_tabOffset--;
@@ -1578,7 +1580,7 @@ class HTML_Page2 extends HTML_Common {
         
         $strHtml .= $this->_generateHead();
         
-        if ($this->_doctype['variant'] == 'frameset') {
+        if (isset($this->_doctype['variant']) && $this->_doctype['variant'] == 'frameset') {
             
             // pass on settings to the frameset
             $this->frameset->setTab($this->_getTab());
