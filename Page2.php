@@ -385,8 +385,8 @@ class HTML_Page2 extends HTML_Common {
      *       W3C defined namespace.) See also {@link setNamespace}. 
      *     - "profile" => string (Sets head section profile) See also
      *       {@link setHeadProfile}.
-     *     - "disableProlog" => bool (Disables the XML prolog. This is usually 
-     *       unwanted, as it makes the page invalid XHTML.) See also
+     *     - "prolog" => bool (Enables or disables the XML prolog. This is 
+     *       usually unwanted, as it makes the page invalid XHTML.) See also
      *       {@link disableXmlProlog} and {@link enableXmlProlog}.
      * 
      * <p>For extensive usage examples, see {@link HTML_Page2 page-level} 
@@ -444,8 +444,8 @@ class HTML_Page2 extends HTML_Common {
             $this->setCache($attributes['cache']);
         }
         
-        if (isset($attributes['disableProlog'])) {
-            if ($attributes['disableProlog'] == true) {
+        if (isset($attributes['prolog'])) {
+            if ($attributes['prolog'] === false) {
                 $this->disableXmlProlog();
             } else {
                 $this->enableXmlProlog();
@@ -543,7 +543,6 @@ class HTML_Page2 extends HTML_Common {
         
         // get line endings
         $lnEnd = $this->_getLineEnd();
-        $tab = $this->_getTab();
         
         // If body attributes exist, add them to the body tag.
         // Many attributes are depreciated because of CSS.
@@ -701,7 +700,7 @@ class HTML_Page2 extends HTML_Common {
                 
                 // See above note
                 if ($this->_mime == 'text/html' ) {
-                    $strHtml .= $tab . $tab . '-->' . $lnEnd;
+                    $strHtml .= $tab . $tab . '//-->' . $lnEnd;
                 } else {
                     $strHtml .= $tab . $tab . ']]>' . $lnEnd;
                 }
@@ -773,7 +772,7 @@ class HTML_Page2 extends HTML_Common {
             PEAR::raiseError('Error: "'.$this->getDoctypeString().'" is an unsupported or illegal document type.',
                                     0,PEAR_ERROR_TRIGGER);
             $this->_simple = true;
-            return;
+            return false;
         }
         
     } // end func _getDoctype
@@ -822,7 +821,6 @@ class HTML_Page2 extends HTML_Common {
                 $strNamespace = $namespace[$type][0];
             }
         }
-            
         
         if ($strNamespace) {
             return $strNamespace;
@@ -831,7 +829,7 @@ class HTML_Page2 extends HTML_Common {
                                     '" does not have a default namespace.' .
                                     ' Use setNamespace() to define your namespace.',
                                     0, PEAR_ERROR_TRIGGER);
-            return;
+            return false;
         }
         
     } // end func _getNamespace
@@ -840,7 +838,7 @@ class HTML_Page2 extends HTML_Common {
      * Parses a doctype declaration like "XHTML 1.0 Strict" to an array
      *
      * @param   string  $string     The string to be parsed
-     * @return string
+     * @return array
      * @access private
      */
     function _parseDoctypeString($string)
