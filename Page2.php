@@ -41,7 +41,8 @@
  * - Quick prototyping using PEAR packages is now a breeze
  * @category HTML
  * @package  HTML_Page2
- * @version  2.0.0
+ * @version  @package_version@
+ * @version  $Id$
  * @license  http://www.php.net/license/3_0.txt PHP License 3.0
  * @author   Adam Daniel <adaniel1@eesus.jnj.com>
  * @author   Klaus Guenther <klaus@capitalfocus.org>
@@ -68,8 +69,9 @@ require_once 'HTML/Common.php';
 
 /**#@+
  * Determines how content is added to the body.
+ * 
+ * Use with the @see addBodyContent method.
  *
- * @var        integer
  * @since      2.0.0
  */
 define('HTML_PAGE2_APPEND',  0);
@@ -319,7 +321,7 @@ class HTML_Page2 extends HTML_Common {
     /**
      * Suppresses doctype
      * 
-     * @var     boolean
+     * @var     bool
      * @access  private
      * @since   2.0
      */
@@ -355,8 +357,8 @@ class HTML_Page2 extends HTML_Common {
     /**
      * Defines whether XML prolog should be prepended to XHTML documents
      * 
-     * @var  bool
-     * @access   private
+     * @var     bool
+     * @access  private
      * @since   2.0
      */
     var $_xmlProlog = true;
@@ -389,8 +391,8 @@ class HTML_Page2 extends HTML_Common {
      *       usually unwanted, as it makes the page invalid XHTML.) See also
      *       {@link disableXmlProlog} and {@link enableXmlProlog}.
      * 
-     * <p>For extensive usage examples, see {@link HTML_Page2 page-level} 
-     * documentation.</p>
+     * <p>For extensive usage examples, see class-level documentation
+     * ({@see HTML_Page2}).</p>
      * 
      * @param   mixed   $attributes     Associative array of table tag 
      *                                  attributes 
