@@ -52,11 +52,13 @@ Note: This release does not support framesets.
 New features:
 * HTML 4.0 doctype support
 * #814 (Feature request: prependBodyContent)
+* Full link tag support (including shortcut for adding favorites icon) (Jason Giangrande)
 * addBodyContent now also takes an additional parameter
-* Basic support for multiple script and style generation
+* Basic support for multiple script and style generation (#698)
 
-Bugfixes (since HTML_Page 2.0.0.RC3)
+Bugfixes (since HTML_Page 2.0.0.RC2)
 * #800 (Output "Object" prior to HTML if doctype is unknown)
+* #950 (fixes reiterative recursion when generating string)
 * #951 (unset META tag was not possible; now use unsetMetaData)
 * Fixed meta tag, title order for pre-XHTML compatibility
 
