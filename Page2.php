@@ -53,10 +53,13 @@ require_once 'PEAR.php';
 /**
  * Include HTML_Common class
  * 
- * Additional required files
+ * <p>Additional required files:</p>
  * 
- * HTML/Page2/Doctypes.php is required in _getDoctype()
- * HTML/Page2/Namespaces.php is required in _getNamespace()
+ * <p>HTML/Page2/Doctypes.php is required in private method 
+ * _getDoctype()</p>
+ * 
+ * <p>HTML/Page2/Namespaces.php is required in private method 
+ * _getNamespace()</p>
  */
 require_once 'HTML/Common.php';
 
@@ -236,6 +239,15 @@ class HTML_Page2 extends HTML_Common {
     var $_language = 'en';
     
     /**
+     * Array of Header <link> tags
+     * 
+     * @var     array
+     * @access  private
+     * @since   2.0
+     */
+    var $_links = array();
+    
+    /**
      * Array of meta tags
      * 
      * @var     array
@@ -261,6 +273,15 @@ class HTML_Page2 extends HTML_Common {
      * @since   2.0
      */
     var $_namespace = '';
+    
+    /**
+     * Document profile
+     * 
+     * @var      string
+     * @access   private
+     * @since   2.0
+     */
+    var $_profile = '';
     
     /**
      * Array of linked scripts
@@ -307,15 +328,6 @@ class HTML_Page2 extends HTML_Common {
      */
     var $_styleSheets = array();
     
-    /**
-     * Array of Header <link> tags
-     * 
-     * @var     array
-     * @access  private
-     * @since   2.0
-     */
-    var $_links = array();
-
     /**
      * HTML page title
      * 
@@ -1098,6 +1110,26 @@ class HTML_Page2 extends HTML_Common {
     } // end func setDoctype
     
     /**
+     * Sets the <head> profile
+     * 
+     * <p>Profiles allow for adding various uncommented links, etc. to the 
+     * head section. For more details, see the W3C documents 
+     * ({@link http://www.w3.org/TR/html4/struct/global.html#h-7.4.4.3
+     * http://www.w3.org/TR/html4/struct/global.html#h-7.4.4.3} and
+     * {@link http://www.w3.org/TR/html401/types.html#type-links
+     * http://www.w3.org/TR/html401/types.html#type-links})
+     * detailing proper use.</p>
+     * 
+     * @param    string    $profile   URL to profile
+     * @access   public
+     * @return   void
+     */
+    function setHeadProfile($profile = '')
+    {
+        $this->_profile = $profile;
+    } // end func setHeadProfile
+    
+    /**
      * Sets the global document language declaration. Default is English.
      * 
      * @access public
@@ -1189,10 +1221,13 @@ class HTML_Page2 extends HTML_Common {
      * Sets the document MIME encoding that is sent to the browser.
      * 
      * <p>This usually will be text/html because most browsers cannot yet  
-     * accept the preferred mime settings for XHTML: application/xhtml+xml 
-     * and to a lesser extent text/xml. Here is a possible way of 
-     * automatically including the proper mime type for XHTML 1.0 if the 
-     * requesting browser supports it:</p>
+     * accept the proper mime settings for XHTML: application/xhtml+xml 
+     * and to a lesser extent application/xml and text/xml. See the W3C note
+     * ({@link http://www.w3.org/TR/xhtml-media-types/ 
+     * http://www.w3.org/TR/xhtml-media-types/}) for more details.</p>
+     * 
+     * <p>Here is a possible way of automatically including the proper mime
+     * type for XHTML 1.0 if the requesting browser supports it:</p>
      * 
      * <code>
      * <?php
@@ -1256,7 +1291,25 @@ class HTML_Page2 extends HTML_Common {
     } // end func setTitle
     
     /**
-     * Generates and returns the complete page as a string.
+     * Generates and returns the complete page as a string
+     * 
+     * <p>This is what you would call if you want to save the page in a
+     * database. It creates a complete, valid HTML document, and returns
+     * it as a string.</p>
+     * 
+     * <p>Usage example:</p>
+     * <code>
+     * <?php
+     * require "HTML/Page2.php";
+     * $page = new HTML_Page2();
+     * $page->setTitle('My Page');
+     * $page->addBodyContent('<h1>My Page</h1>');
+     * $page->addBodyContent('<p>First Paragraph.</p>');
+     * $page->addBodyContent('<p>Second Paragraph.</p>');
+     * $html = $page->toHtml();
+     * // here you insert HTML into a database
+     * ?>
+     * </code>
      * 
      * @return string
      * @access public
@@ -1270,7 +1323,9 @@ class HTML_Page2 extends HTML_Common {
         // get the doctype declaration
         $strDoctype = $this->_getDoctype();
         
-        // This determines how the doctype is declared
+        // This determines how the doctype is declared and enables various
+        // features depending on whether the the document is XHTML, HTML or
+        // if no doctype declaration is desired
         if ($this->_simple) {
             
             $strHtml = '<html>' . $lnEnd;
@@ -1283,8 +1338,15 @@ class HTML_Page2 extends HTML_Common {
             }
             
             $strHtml = $strDoctype . $lnEnd;
-            $strHtml .= '<html xmlns="' . $this->_namespace . '" xml:lang="' . $this->_language . '">' . $lnEnd;
-
+            $strHtml .= '<html xmlns="' . $this->_namespace . '" xml:lang="' . $this->_language . '"';
+            
+            // If a special profile is defined, make sure it is included
+            // in the opening html tag. Normally this will not be the case.
+            if ($this->_profile) {
+                $strHtml .= ' profile="'.$this->_profile.'"';
+            }
+            $strHtml .= '>' . $lnEnd;
+            
             // check whether the XML prolog should be prepended
             if ($this->_xmlProlog){
                 $strHtml  = '<?xml version="1.0" encoding="' . $this->_charset . '"?>' . $lnEnd . $strHtml;
@@ -1293,7 +1355,15 @@ class HTML_Page2 extends HTML_Common {
         } else {
             
             $strHtml  = $strDoctype . $lnEnd;
-            $strHtml .= '<html>' . $lnEnd;
+            $strHtml .= '<html';
+            
+            // If a special profile is defined, make sure it is included
+            // in the opening html tag. Normally this will not be the case.
+            if ($this->_profile) {
+                $strHtml .= ' profile="'.$this->_profile.'"';
+            }
+            
+            $strHtml .= '>' . $lnEnd;
             
         }
 
@@ -1312,6 +1382,7 @@ class HTML_Page2 extends HTML_Common {
      */
     function toFile($filename)
     {
+        
         if (function_exists('file_put_content')){
             file_put_content($filename, $this->toHtml());
         } else {
@@ -1319,6 +1390,7 @@ class HTML_Page2 extends HTML_Common {
             fwrite($file, $this->toHtml());
             fclose($file);
         }
+        
         if (!file_exists($filename)){
             PEAR::raiseError("HTML_Page::toFile() error: Failed to write to $filename",0,PEAR_ERROR_TRIGGER);
         }
