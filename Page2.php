@@ -20,11 +20,11 @@
 // $Id$
 
 /**
- * The PEAR::HTML_Page2 package provides a simple interface for generating an XHTML compliant page.
+ * The PEAR::HTML_Page2 package provides a simple interface for generating an XHTML compliant page
  * 
  * Features:
- * - supports virtually all HTML doctypes, from HTML 2.0 through XHTML 1.1 and XHTML Basic 1.0
- *   plus preliminary support for XHTML 2.0
+ * - supports virtually all HTML doctypes, from HTML 2.0 through XHTML 1.1 and 
+ *   XHTML Basic 1.0 plus preliminary support for XHTML 2.0
  * - namespace support
  * - global language declaration for the document
  * - line ending styles
@@ -33,7 +33,8 @@
  * - support for script declaration in the head section
  * - support for linked stylesheets and scripts
  * - full support for header <link> tags
- * - body can be a string, object with toHtml or toString methods or an array (can be combined)
+ * - body can be a string, object with toHtml or toString methods or an array 
+ *   (can be combined)
  * 
  * Ideas for use:
  * - Use to validate the output of a class for XHTML compliance
@@ -43,6 +44,7 @@
  * @version  2.0
  * @author   Adam Daniel <adaniel1@eesus.jnj.com>
  * @author   Klaus Guenther <klaus@capitalfocus.org>
+ * @since   PHP 4.0.3pl1
  */
 
 /**
@@ -166,7 +168,7 @@ require_once 'HTML/Common.php';
  * </code>
  * 
  * <p><b>HTML examples:</b></p>
- *
+ * 
  * <p>HTML 4.01 example:</p>
  * <code>
  * <?php
@@ -189,7 +191,8 @@ require_once 'HTML/Common.php';
  * 
  * @version 2.0
  * @package HTML_Page2
- * @since   PHP 4.0.3pl1
+ * @author   Adam Daniel <adaniel1@eesus.jnj.com>
+ * @author   Klaus Guenther <klaus@capitalfocus.org>
  */
 class HTML_Page2 extends HTML_Common {
     
