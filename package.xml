@@ -53,6 +53,7 @@ New features:
             <file role="doc" name="Page2_NoDoctype.php" />
             <file role="doc" name="Page2_Simple.php" />
             <file role="doc" name="Page2_Complex.php" />
+            <file role="doc" name="Page2_Frameset.php" />
           </dir>
         </dir>
     </filelist>

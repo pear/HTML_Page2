@@ -43,7 +43,7 @@ require_once 'HTML/Page2/Frameset/Frame.php';
 class HTML_Page2_Frameset extends HTML_Common
 {
     
-    var $_master = true;
+    var $_master = false;
     var $_rows = array();
     var $_cols = array();
     var $_type = '';
@@ -89,7 +89,7 @@ class HTML_Page2_Frameset extends HTML_Common
     
     function addFrameset($name)
     {
-        $this->name = new HTML_Page2_Frameset();
+        $this->$name = new HTML_Page2_Frameset();
     } // end func addFrame
     
     function toHTML()
@@ -122,15 +122,17 @@ class HTML_Page2_Frameset extends HTML_Common
                 $this->$name->setTabOffset($offset + 1);
                 $this->$name->setTab($tab);
                 $this->$name->setLineEnd($lnEnd);
+                $this->$name->xhtml = $this->xhtml;
 
                 // fetch the
                 $strHtml .= $this->$name->toHtml();
             } else {
+                $this->$name->xhtml = $this->xhtml;
                 $strHtml .= $tabs . $tab . $this->$name->toHtml() . $lnEnd;
             }
         }
         if (!$this->_master) {
-            $strHtml = $tabs . '</frameset>' . $lnEnd;
+            $strHtml .= $tabs . '</frameset>' . $lnEnd;
         }
         
         return $strHtml;

@@ -31,7 +31,6 @@
  * @since   PHP 4.0.3pl1
  */
 
-
 /**
  * Include HTML_Common class
  */
