@@ -41,7 +41,8 @@
  * - Quick prototyping using PEAR packages is now a breeze
  * @category HTML
  * @package  HTML_Page2
- * @version  2.0
+ * @version  2.0.0
+ * @license  http://www.php.net/license/3_0.txt PHP License 3.0
  * @author   Adam Daniel <adaniel1@eesus.jnj.com>
  * @author   Klaus Guenther <klaus@capitalfocus.org>
  * @since   PHP 4.0.3pl1
@@ -64,6 +65,17 @@ require_once 'PEAR.php';
  * _getNamespace()</p>
  */
 require_once 'HTML/Common.php';
+
+/**#@+
+ * Determines how content is added to the body.
+ *
+ * @var        integer
+ * @since      2.0.0
+ */
+define('HTML_PAGE2_APPEND',  0);
+define('HTML_PAGE2_PREPEND', 1);
+define('HTML_PAGE2_REPLACE', 2);
+/**#@-*/
 
 /**
  * (X)HTML Page generation class
@@ -189,7 +201,7 @@ require_once 'HTML/Common.php';
  * </code>
  * 
  * 
- * @version 2.0
+ * @version 2.0.0
  * @package HTML_Page2
  * @author   Adam Daniel <adaniel1@eesus.jnj.com>
  * @author   Klaus Guenther <klaus@capitalfocus.org>
@@ -357,8 +369,8 @@ class HTML_Page2 extends HTML_Common {
      * <p><b>General options:</b></p>
      *     - "lineend" => "unix|win|mac" (Sets line ending style; defaults to 
      *        unix.) See also {@link setLineEnd}. 
-     *     - "tab"     => string (Sets line ending style; defaults to \t.)
-     *        See also {@link setTab}. 
+     *     - "tab"     => string (Sets line ending style; defaults to \t.) See 
+     *        also {@link setTab}. 
      *     - "cache"   => "false|true"  See also {@link setCache}. 
      *     - "charset" => charset string (Sets charset encoding; defaults 
      *       to utf-8) See also {@link setCharset} and {@link getCharset}. 
@@ -371,6 +383,14 @@ class HTML_Page2 extends HTML_Common {
      *       document language; defaults to "en".) See also {@link setLang}.
      *     - "namespace"  => string (Sets document namespace; defaults to the 
      *       W3C defined namespace.) See also {@link setNamespace}. 
+     *     - "profile" => string (Sets head section profile) See also
+     *       {@link setHeadProfile}.
+     *     - "disableProlog" => bool (Disables the XML prolog. This is usually 
+     *       unwanted, as it makes the page invalid XHTML.) See also
+     *       {@link disableXmlProlog} and {@link enableXmlProlog}.
+     * 
+     * <p>For extensive usage examples, see {@link HTML_Page2 page-level} 
+     * documentation.</p>
      * 
      * @param   mixed   $attributes     Associative array of table tag 
      *                                  attributes 
@@ -412,12 +432,24 @@ class HTML_Page2 extends HTML_Common {
             $this->setNamespace($attributes['namespace']);
         }
         
+        if (isset($attributes['profile'])) {
+            $this->setHeadProfile($attributes['profile']);
+        }
+        
         if (isset($attributes['tab'])) {
             $this->setTab($attributes['tab']);
         }
         
         if (isset($attributes['cache'])) {
             $this->setCache($attributes['cache']);
+        }
+        
+        if (isset($attributes['disableProlog'])) {
+            if ($attributes['disableProlog'] == true) {
+                $this->disableXmlProlog();
+            } else {
+                $this->enableXmlProlog();
+            }
         }
         
     } // end class constructor
@@ -428,39 +460,76 @@ class HTML_Page2 extends HTML_Common {
      * <p>It also handles objects, calling the toHTML or toString methods
      * and propagating the line endings and tabs for objects that
      * extend HTML_Common.</p>
-     *
+     * 
+     * <p>For more details read the well-documented source.</p>
+     * 
      * @access  protected
-     * @param   mixed   $element   The element to be processed
+     * @param   mixed       $element   The element to be processed
      * @return  string
      */
     function _elementToHtml(&$element) // It's a reference just to save some memory.
     {
+        
+        // get the special formatting settings
         $lnEnd = $this->_getLineEnd();
         $tab = $this->_getTab();
-        $strHtml = '';
-            if (is_object($element)) {
-                if (is_subclass_of($element, 'html_common')) {
-                    $element->setTabOffset(1);
-                    $element->setTab($tab);
-                    $element->setLineEnd($lnEnd);
-                }
-                if (is_object($element)) {
-                    if (method_exists($element, 'toHtml')) {
-                        $strHtml .= $this->_elementToHtml($element->toHtml()) . $lnEnd;
-                    } elseif (method_exists($element, 'toString')) {
-                        $strHtml .= $this->_elementToHtml($element->toString()) . $lnEnd;
-                    }
-                } else {
-                    $strHtml .= $tab . $element . $lnEnd;
-                }
-            } elseif (is_array($element)) {
-                               foreach ($element as $item) {
-                                               $strHtml .= $this->_elementToHtml($item);
-                               }
-            } else {
-                $strHtml .= $tab . $element . $lnEnd;
+        
+        // initialize the variable that will collect our generated HTML
+        $strHtml = ''; 
+        
+        // Attempt to generate HTML code for what is passed
+        if (is_object($element)) {
+            // If this is an object, attempt to generate the appropriate HTML 
+            // code.
+            
+            if (is_subclass_of($element, 'html_common')) {
+                // For this special case, we set the appropriate indentation
+                // and line end styles. That way uniform HTML is generated.
+                
+                // The reason this does not check for each method individually 
+                // is that it could be that setTab, for example, could 
+                // possibly refer to setTable, etc. And such ambiguity could
+                // create a big mess. So this will simply bias  the HTML_Page 
+                // class family toward other HTML_Common-based classes.
+                
+                // Of course, these features are not necessarily implemented
+                // in all HTML_Common-based packages. But at least this makes 
+                // it possible to propagate the settings.
+                $element->setTabOffset(1);
+                $element->setTab($tab);
+                $element->setLineEnd($lnEnd);
             }
+            
+            // Attempt to generate code using first toHtml and then toString 
+            // methods. The result is not parsed with _elementToHtml because
+            // it would improperly add one tab indentation to the initial line
+            // of each object's output.
+            if (method_exists($element, 'toHtml')) {
+                $strHtml .= $element->toHtml() . $lnEnd;
+            } elseif (method_exists($element, 'toString')) {
+                $strHtml .= $element->toString() . $lnEnd;
+            } else {
+                // If the class does not have an appropriate method, an error 
+                // should be returned rather than simply dying or outputting
+                // the difficult to troubleshoot 'Object' output.
+                $class = get_class($element);
+                PEAR::raiseError("Error: Content object (class $class) " .
+                                 'does not support  methods toHtml() or ' .
+                                 'toString().',0,PEAR_ERROR_TRIGGER);
+            }
+        } elseif (is_array($element)) {
+            foreach ($element as $item) {
+                // Parse each element individually
+                $strHtml .= $this->_elementToHtml($item);
+            }
+        } else { 
+            // If we don't have an object or array, we can simply output
+            // the element after indenting it and properly ending the line.
+            $strHtml .= $tab . $element . $lnEnd;
+        }
+        
         return $strHtml;
+        
     } // end func _elementToHtml
     
     /**
@@ -477,7 +546,7 @@ class HTML_Page2 extends HTML_Common {
         $tab = $this->_getTab();
         
         // If body attributes exist, add them to the body tag.
-        // Depreciated because of CSS
+        // Many attributes are depreciated because of CSS.
         $strAttr = $this->_getAttrString($this->_attributes);
         
         if ($strAttr) {
@@ -505,7 +574,7 @@ class HTML_Page2 extends HTML_Common {
      */
     function _generateHead()
     {
-        // close empty tags if XHTML
+        // Close empty tags if XHTML for XML compliance
         if ($this->_doctype['type'] == 'html'){
             $tagEnd = '>';
         } else {
@@ -550,45 +619,47 @@ class HTML_Page2 extends HTML_Common {
         }
         
         // Generate stylesheet declarations
-        foreach ($this->_style as $type => $content) {
-            $strHtml .= $tab . '<style type="' . $type . '">' . $lnEnd;
-            
-            // This is for full XHTML support.
-            if ($this->_mime == 'text/html' ) {
-                $strHtml .= $tab . $tab . '<!--' . $lnEnd;
-            } else {
-                $strHtml .= $tab . $tab . '<![CDATA[' . $lnEnd;
-            }
-            
-            if (is_object($content)) {
+        foreach ($this->_style as $styledecl) {
+            foreach ($styledecl as $type => $content) {
+                $strHtml .= $tab . '<style type="' . $type . '">' . $lnEnd;
                 
-                // first let's propagate line endings and tabs for other HTML_Common-based objects
-                if (is_subclass_of($content, "html_common")) {
-                    $content->setTab($tab);
-                    $content->setTabOffset(3);
-                    $content->setLineEnd($lnEnd);
-                }
-                
-                // now let's get a string from the object
-                if (method_exists($content, "toString")) {
-                    $strHtml .= $content->toString() . $lnEnd;
+                // This is for full XHTML support.
+                if ($this->_mime == 'text/html' ) {
+                    $strHtml .= $tab . $tab . '<!--' . $lnEnd;
                 } else {
-                    PEAR::raiseError('Error: Style content object does not support  method toString().',
-                            0,PEAR_ERROR_TRIGGER);
+                    $strHtml .= $tab . $tab . '<![CDATA[' . $lnEnd;
                 }
                 
-            } else {
-                $strHtml .= $content . $lnEnd;
+                if (is_object($content)) {
+                    
+                    // first let's propagate line endings and tabs for other HTML_Common-based objects
+                    if (is_subclass_of($content, "html_common")) {
+                        $content->setTab($tab);
+                        $content->setTabOffset(3);
+                        $content->setLineEnd($lnEnd);
+                    }
+                    
+                    // now let's get a string from the object
+                    if (method_exists($content, "toString")) {
+                        $strHtml .= $content->toString() . $lnEnd;
+                    } else {
+                        PEAR::raiseError('Error: Style content object does not support  method toString().',
+                                0,PEAR_ERROR_TRIGGER);
+                    }
+                    
+                } else {
+                    $strHtml .= $content . $lnEnd;
+                }
+                
+                // See above note
+                if ($this->_mime == 'text/html' ) {
+                    $strHtml .= $tab . $tab . '-->' . $lnEnd;
+                } else {
+                    $strHtml .= $tab . $tab . ']]>' . $lnEnd;
+                }
+                $strHtml .= $tab . '</style>' . $lnEnd;
             }
-            
-            // See above note
-            if ($this->_mime == 'text/html' ) {
-                $strHtml .= $tab . $tab . '-->' . $lnEnd;
-            } else {
-                $strHtml .= $tab . $tab . ']]>' . $lnEnd;
-            }
-            $strHtml .= $tab . '</style>' . $lnEnd;
-        }
+        } // end generating stylesheet blocks
         
         // Generate script file links
         foreach ($this->_scripts as $strSrc => $strType) {
@@ -596,45 +667,47 @@ class HTML_Page2 extends HTML_Common {
         }
         
         // Generate script declarations
-        foreach ($this->_script as $type => $content) {
-            $strHtml .= $tab . '<script type="' . $type . '">' . $lnEnd;
-            
-            // This is for full XHTML support.
-            if ($this->_mime == 'text/html' ) {
-                $strHtml .= $tab . $tab . '<!--' . $lnEnd;
-            } else {
-                $strHtml .= $tab . $tab . '<![CDATA[' . $lnEnd;
-            }
-            
-            if (is_object($content)) {
+        foreach ($this->_script as $script) {
+            foreach ($script as $type => $content) {
+                $strHtml .= $tab . '<script type="' . $type . '">' . $lnEnd;
                 
-                // first let's propagate line endings and tabs for other HTML_Common-based objects
-                if (is_subclass_of($content, "html_common")) {
-                    $content->setTab($tab);
-                    $content->setTabOffset(3);
-                    $content->setLineEnd($lnEnd);
-                }
-                
-                // now let's get a string from the object
-                if (method_exists($content, "toString")) {
-                    $strHtml .= $content->toString() . $lnEnd;
+                // This is for full XHTML support.
+                if ($this->_mime == 'text/html' ) {
+                    $strHtml .= $tab . $tab . '<!--' . $lnEnd;
                 } else {
-                    PEAR::raiseError('Error: Script content object does not support  method toString().',
-                            0,PEAR_ERROR_TRIGGER);
+                    $strHtml .= $tab . $tab . '<![CDATA[' . $lnEnd;
                 }
                 
-            } else {
-                $strHtml .= $content . $lnEnd;
+                if (is_object($content)) {
+                    
+                    // first let's propagate line endings and tabs for other HTML_Common-based objects
+                    if (is_subclass_of($content, "html_common")) {
+                        $content->setTab($tab);
+                        $content->setTabOffset(3);
+                        $content->setLineEnd($lnEnd);
+                    }
+                    
+                    // now let's get a string from the object
+                    if (method_exists($content, "toString")) {
+                        $strHtml .= $content->toString() . $lnEnd;
+                    } else {
+                        PEAR::raiseError('Error: Script content object does not support  method toString().',
+                                0,PEAR_ERROR_TRIGGER);
+                    }
+                    
+                } else {
+                    $strHtml .= $content . $lnEnd;
+                }
+                
+                // See above note
+                if ($this->_mime == 'text/html' ) {
+                    $strHtml .= $tab . $tab . '-->' . $lnEnd;
+                } else {
+                    $strHtml .= $tab . $tab . ']]>' . $lnEnd;
+                }
+                $strHtml .= $tab . '</script>' . $lnEnd;
             }
-            
-            // See above note
-            if ($this->_mime == 'text/html' ) {
-                $strHtml .= $tab . $tab . '-->' . $lnEnd;
-            } else {
-                $strHtml .= $tab . $tab . ']]>' . $lnEnd;
-            }
-            $strHtml .= $tab . '</script>' . $lnEnd;
-        }
+        } // end generating script blocks
         
         // Close tag
         $strHtml .=  '</head>' . $lnEnd;
@@ -646,7 +719,7 @@ class HTML_Page2 extends HTML_Common {
     /**
      * Returns the doctype declaration
      *
-     * @return mixed
+     * @return string
      * @access private
      */
     function _getDoctype()
@@ -708,11 +781,12 @@ class HTML_Page2 extends HTML_Common {
     /**
      * Retrieves the document namespace
      *
-     * @return mixed
+     * @return string
      * @access private
      */
     function _getNamespace()
     {
+        
         require('HTML/Page2/Namespaces.php');
         
         if (isset($this->_doctype['type'])) {
@@ -771,6 +845,7 @@ class HTML_Page2 extends HTML_Common {
      */
     function _parseDoctypeString($string)
     {
+        
         $split = explode(' ',strtolower($string));
         $elements = count($split);
         
@@ -783,50 +858,45 @@ class HTML_Page2 extends HTML_Common {
         }
         
         return $array;
+        
     } // end func _parseDoctypeString
     
     /**
      * Sets the content of the <body> tag
      * 
-     * <p>If content already exists, the new content is appended.</p>
-     *
-     * <p>If you wish to overwrite whatever is in the body, use {@link setBody};
-     * {@link unsetBody} completely empties the body without inserting new content.
-     * It is possible to add objects, strings or an array of strings and/or objects.
-     * Objects must have a toString method.</p>
+     * <p>It is possible to add objects, strings or an array of strings 
+     * and/or objects. Objects must have a toHtml or toString method.</p>
      * 
-     * @param mixed $content  New <body> tag content (may be passed as a reference)
-     * @param int   $flag     Determines whether to prepend, append or replace the content
+     * <p>By default, if content already exists, the new content is appended.
+     * If you wish to overwrite whatever is in the body, use {@link setBody}; 
+     * {@link unsetBody} completely empties the body without inserting new 
+     * content. You can also use {@link prependBodyContent} to prepend content 
+     * to whatever is currently in the array of body elements.</p>
+     * 
+     * <p>The following constants are defined to be passed as the flag
+     * attribute: HTML_PAGE2_APPEND, HTML_PAGE2_PREPEND and HTML_PAGE2_REPLACE.
+     * Their usage should be quite clear from their names.</p> 
+     * 
+     * @param mixed $content  New <body> tag content (may be passed as a 
+     *                        reference)
+     * @param int   $flag     Determines whether to prepend, append or replace 
+     *                        the content. Use pre-defined constants.
      * @access public
      */
-    function addBodyContent($content, $flag = 0)
+    function addBodyContent($content, $flag = HTML_PAGE2_APPEND)
     {
-        if ($flag == 2) {
-            $this->setBody($content);
-        } elseif ($flag == 1) {
+        
+        if ($flag == HTML_PAGE2_REPLACE) {       // replaces any content in body 
+            $this->unsetBody();
+            $this->_body[] =& $content;
+        } elseif ($flag == HTML_PAGE2_PREPEND) { // prepends content to the body 
             array_unshift($this->_body, $content);
-        } else {
+        } else {                                // appends content to the body
             $this->_body[] =& $content;
         }
+        
     } // end addBodyContent    
     
-    /**
-     * Prepends content to the content of the <body> tag. Wrapper for {@link addBodyContent}
-     * 
-     * <p>If you wish to overwrite whatever is in the body, use {@link setBody};
-     * {@link addBodyContent} provides full functionality including appending;
-     * {@link unsetBody} completely empties the body without inserting new content.
-     * It is possible to add objects, strings or an array of strings and/or objects
-     * Objects must have a toString method.</p>
-     *
-     * @param mixed $content  New <body> tag content (may be passed as a reference)
-     * @access public
-     */
-    function prependBodyContent($content)
-    {
-        $this->addBodyContent($content, 1);
-    } // end func addScript
-
     /**
      * Adds a linked script to the page
      * 
@@ -852,7 +922,7 @@ class HTML_Page2 extends HTML_Common {
      */
     function addScriptDeclaration($content, $type = 'text/javascript')
     {
-        $this->_script[strtolower($type)] =& $content;
+        $this->_script[][strtolower($type)] =& $content;
     } // end func addScriptDeclaration
     
     /**
@@ -883,7 +953,7 @@ class HTML_Page2 extends HTML_Common {
      */
     function addStyleDeclaration($content, $type = 'text/css')
     {
-        $this->_style[strtolower($type)] =& $content;
+        $this->_style[][strtolower($type)] =& $content;
     } // end func addStyleDeclaration
     
     /**
@@ -938,6 +1008,34 @@ class HTML_Page2 extends HTML_Common {
     /**
      *  Disables prepending the XML prolog for XHTML documents
      * 
+     * <p>Normally, XHTML documents require the XML prolog to be on the first 
+     * line of each valid document:</p>
+     * 
+     * <code>
+     * <?xml version="1.0" encoding="utf-8"?> 
+     * <!DOCTYPE html
+     *     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     *     "http://www.w3c.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+     * 
+     * <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+     * <head>
+     * ...
+     * </code>
+     * 
+     * <p>However, some browsers, most noticeably Microsoft Internet Explorer, 
+     * have difficulties properly displaying XHTML in compatibility mode with 
+     * this. This method is for workaround solutions, such as the infamous CSS 
+     * Box Hack.</p>
+     * 
+     * <p>The opposite (and default) effect can be achieved using the 
+     * {@link enableXmlProlog} method.</p>
+     * 
+     * <p>Usage:</p>
+     * 
+     * <code>
+     * $page->disableXmlProlog();
+     * </code>
+     * 
      * @access   public
      * @return  void
      */
@@ -947,7 +1045,18 @@ class HTML_Page2 extends HTML_Common {
     } // end func disableXmlProlog
     
     /**
-     *  Enables prepending the XML prolog for XHTML documents (default)
+     * Enables prepending the XML prolog for XHTML documents (default)
+     * 
+     * <p>This method enables the default XHTML output, with an XML prolog on 
+     * the first line of the document. See {@link disableXmlProlog} for more 
+     * details on why it may or may not be advantageous to have the XML prolog 
+     * disabled.</p>
+     * 
+     * <p>Usage:</p>
+     * 
+     * <code>
+     * $page->enableXmlProlog();
+     * </code>
      * 
      * @access   public
      * @return   void
@@ -1015,11 +1124,33 @@ class HTML_Page2 extends HTML_Common {
     } // end func getTitle
     
     /**
+     * Prepends content to the content of the <body> tag. Wrapper for {@link addBodyContent}
+     * 
+     * <p>If you wish to overwrite whatever is in the body, use {@link setBody};
+     * {@link addBodyContent} provides full functionality including appending;
+     * {@link unsetBody} completely empties the body without inserting new content.
+     * It is possible to add objects, strings or an array of strings and/or objects
+     * Objects must have a toString method.</p>
+     *
+     * @param mixed $content  New <body> tag content (may be passed as a reference)
+     * @access public
+     */
+    function prependBodyContent($content)
+    {
+        $this->addBodyContent($content, HTML_PAGE2_PREPEND);
+    } // end func prependBodyContent
+    
+    /**
      * Sets the content of the <body> tag.
      * 
-     * <p>If content exists, it is overwritten.
-     * If you wish to use a "safe" version, use {@link addBodyContent}
-     * Objects must have a toString method.</p>
+     * <p>If content exists, it is overwritten. If you wish to use a "safe" 
+     * version, use {@link addBodyContent}. Objects must have a toString 
+     * method.</p>
+     * 
+     * <p>This function acts as a wrapper for {@link addBodyContent}. If you 
+     * are using PHP 4.x and would like to pass an object by reference, this
+     * is not the function to use. Use {@link addBodyContent} with the flag
+     * HTML_PAGE2_REPLACE instead.</p>
      * 
      * @param mixed    $content   New <body> tag content. May be an object. 
      *                            (may be passed as a reference)
@@ -1027,8 +1158,7 @@ class HTML_Page2 extends HTML_Common {
      */
     function setBody($content)
     {
-        $this->unsetBody();
-        $this->_body[] =& $content;
+        $this->addBodyContent($content, HTML_PAGE2_REPLACE);
     } // end setBody
     
     /**
@@ -1040,11 +1170,15 @@ class HTML_Page2 extends HTML_Common {
     {
         $this->_body = array();
     } // end unsetBody
-        
+    
     /**
-     * Sets the attributes of the <body> tag.
-     * If attributes exist, they are overwritten.
-     *
+     * Sets the attributes of the <body> tag
+     * 
+     * <p>If attributes exist, they are overwritten. In XHTML, all attribute 
+     * names must be lowercase. As lowercase attributes are legal in SGML, all 
+     * attributes are automatically lowercased. This also prevents accidentally
+     * creating duplicate attributes when attempting to update one.</p>
+     * 
      * @param  array   $attributes   <body> tag attributes.
      * @access public
      */
@@ -1057,6 +1191,11 @@ class HTML_Page2 extends HTML_Common {
      * Defines if the document should be cached by the browser
      * 
      * <p>Defaults to false.</p>
+     * 
+     * <p>A fully configurable cache header is in the works. for now, though 
+     * if you would like to determine exactly what caching headers are sent to 
+     * to the browser, set cache to true, and then output your own headers 
+     * before calling {@link display}.</p>
      * 
      * @param  string   $cache  Options are currently 'true' or 'false'
      * @access public
@@ -1268,6 +1407,20 @@ class HTML_Page2 extends HTML_Common {
     /**
      * Sets the document namespace
      * 
+     * <p>By default, W3C namespaces are used. However, if you need to define 
+     * your own namespace, you can set it here.</p>
+     * 
+     * <p>Usage:<p>
+     * 
+     * <code>
+     * // This is how you can set your own namespace:
+     * $page->setNamespace('http://www.w3.org/1999/xhtml');
+     * 
+     * // This reverts to default setting and retrieves the appropriate 
+     * // W3C namespace for the document type:
+     * $page->setNamespace();
+     * </code>
+     * 
      * @param    string    $namespace  Optional. W3C namespaces are used by default.
      * @access   public
      * @return   void
@@ -1283,6 +1436,12 @@ class HTML_Page2 extends HTML_Common {
     
     /**
      * Sets the title of the page
+     * 
+     * <p>Usage:</p>
+     * 
+     * <code>
+     * $page->setTitle('My Page');
+     * </code>
      * 
      * @param    string    $title
      * @access   public
@@ -1317,7 +1476,7 @@ class HTML_Page2 extends HTML_Common {
      * @return string
      * @access public
      */
-    function toHTML()
+    function toHtml()
     {
         
         // get line endings
@@ -1378,7 +1537,23 @@ class HTML_Page2 extends HTML_Common {
     
     /**
      * Generates the document and outputs it to a file.
-     *
+     * 
+     * <p>Uses {@link file_put_content} when available. Includes a workaround 
+     * for older versions of PHP.</p>
+     * 
+     * <p>Usage example:</p>
+     * <code>
+     * <?php
+     * require "HTML/Page2.php";
+     * $page = new HTML_Page2();
+     * $page->setTitle('My Page');
+     * $page->addBodyContent('<h1>My Page</h1>');
+     * $page->addBodyContent('<p>First Paragraph.</p>');
+     * $page->addBodyContent('<p>Second Paragraph.</p>');
+     * $page->toFile('myPage.html');
+     * ?>
+     * </code>
+     * 
      * @return  void
      * @since   2.0
      * @access  public
@@ -1401,24 +1576,52 @@ class HTML_Page2 extends HTML_Common {
     } // end func toFile
     
     /**
-     * Outputs the HTML content to the screen.
+     * Outputs the HTML content to the browser
      * 
-     * @access    public
+     * <p>This method outputs to the default display device. Normally that 
+     * will be the browser.</p>
+     * 
+     * <p>If caching is turned off, which is the default case, this generates 
+     * the appropriate headers:</p>
+     * 
+     * <code>
+     * header("Expires: Tue, 1 Jan 1980 12:00:00 GMT");
+     * header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+     * header("Cache-Control: no-cache");
+     * header("Pragma: no-cache");
+     * </code>
+     * 
+     * <p>This functionality can be disabled:</p>
+     * 
+     * <code>
+     * $page->setCache('true');
+     * </code>
+     * 
+     * @return   void
+     * @access   public
      */
     function display()
     {
-        if(! $this->_cache) {
+        
+        // If caching is to be implemented, this bit of code will need to be 
+        // replaced with a private function. Else it may be possible to  
+        // borrow from Cache or Cache_Lite.
+        if(!$this->_cache) {
             header("Expires: Tue, 1 Jan 1980 12:00:00 GMT");
             header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
             header("Cache-Control: no-cache");
             header("Pragma: no-cache");
         }
         
-        // set character encoding
+        // Set mime type and character encoding
         header('Content-Type: ' . $this->_mime .  '; charset=' . $this->_charset);
         
+        // Generate HTML document
         $strHtml = $this->toHTML();
+        
+        // Output to browser, screen or other default device
         print $strHtml;
+        
     } // end func display
     
 }
