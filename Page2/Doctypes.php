@@ -65,8 +65,16 @@ $doctype['xhtml']['basic']['1.0'][] = '<!DOCTYPE html';
 $doctype['xhtml']['basic']['1.0'][] = '    PUBLIC "-//W3C//DTD XHTML Basic 1.0//EN"';
 $doctype['xhtml']['basic']['1.0'][] = '    "http://www.w3.org/TR/xhtml-basic/xhtml-basic10.dtd">';
 
+// XHTML Print 1.0
+// from the W3C Candidate Recommendation 20 January 2004
+// http://www.w3.org/TR/2004/CR-xhtml-print-20040120 
+$doctype['xhtml']['print']['1.0'][] = '<!DOCTYPE html"';
+$doctype['xhtml']['print']['1.0'][] = '    PUBLIC "-//W3C//DTD XHTML-Print 1.0//EN"';
+$doctype['xhtml']['print']['1.0'][] = '    "http://www.w3.org/MarkUp/DTD/xhtml-print10.dtd">';
+
 // XHTML 2.0
 // from the W3C Working Draft 6 May 2003
+// http://www.w3.org/TR/2003/WD-xhtml2-20030506
 $doctype['xhtml']['2.0'][] = '<!DOCTYPE html';
 $doctype['xhtml']['2.0'][] = '    PUBLIC "-//W3C//DTD XHTML 2.0//EN"';
 $doctype['xhtml']['2.0'][] = '    "TBD">';
