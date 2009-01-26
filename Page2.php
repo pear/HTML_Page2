@@ -1630,10 +1630,16 @@ class HTML_Page2 extends HTML_Common {
      */
     function toFile($filename)
     {
-        file_put_contents($filename, $this->toHtml());
-        
+        if (function_exists('file_put_contents')) { 
+            file_put_contents($filename, $this->toHtml());
+        } else {
+            $file = fopen($filename,'wb'); 		
+            fwrite($file, $this->toHtml()); 		
+            fclose($file); 		
+        }
+
         if (!file_exists($filename)){
-            PEAR::raiseError("HTML_Page::toFile() error: Failed to write to $filename",0,PEAR_ERROR_TRIGGER);
+            PEAR::raiseError("HTML_Page::toFile() error: Failed to write to $filename", 0, PEAR_ERROR_TRIGGER);
         }
         
     } // end func toFile
