@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
-<package version="1.0">
-  <name>HTML_Page2</name>
-  <summary>PEAR::HTML_Page2 is a base class for XHTML page generation.</summary>
-  <description>
-The PEAR::HTML_Page2 package provides a simple interface for generating an XHTML compliant page.
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.8.0alpha1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+ <name>HTML_Page2</name>
+ <channel>pear.php.net</channel>
+ <summary>PEAR::HTML_Page2 is a base class for XHTML page generation.</summary>
+ <description>The PEAR::HTML_Page2 package provides a simple interface for generating an XHTML compliant page.
 * supports virtually all HTML doctypes, from HTML 2.0 through XHTML 1.1 and XHTML Basic 1.0
   plus preliminary support for XHTML 2.0
 * namespace support
@@ -19,54 +18,75 @@ The PEAR::HTML_Page2 package provides a simple interface for generating an XHTML
 
 Ideas for use:
 * Use to validate the output of a class for XHTML compliance
-* Quick prototyping using PEAR packages is now a breeze
-  </description>
-  <license>PHP License 3.0</license>
-  <maintainers>
-    <maintainer>
-      <user>thesaur</user>
-      <name>Klaus Guenther</name>
-      <email>klaus@capitalfocus.org</email>
-      <role>lead</role>
-    </maintainer>
-  </maintainers>
-  <release>
-    <version>0.6.0beta</version>
-    <date>2003-06-24</date>
-    <state>beta</state>
-    <notes>
-New features:
-* Frameset support
-    </notes>
-    <filelist>
-      <dir name="/" baseinstalldir="HTML">
-        <file role="php">Page2.php</file>
-          <dir name="Page2">
-            <file role="php" name="Doctypes.php" />
-            <file role="php" name="Frameset.php" />
-            <file role="php" name="Namespaces.php" />
-            <dir name="Frameset">
-              <file role="php" name="Frame.php" />
-            </dir>
-          </dir>
-          <dir name="examples">
-            <file role="doc" name="Page2_NoDoctype.php" />
-            <file role="doc" name="Page2_Simple.php" />
-            <file role="doc" name="Page2_Complex.php" />
-            <file role="doc" name="Page2_Frameset.php" />
-          </dir>
-        </dir>
-    </filelist>
-    <deps>
-      <dep type="pkg" rel="ge" version="1.2">HTML_Common</dep>
-    </deps>
-  </release>
+* Quick prototyping using PEAR packages is now a breeze</description>
+ <lead>
+  <name>Klaus Guenther</name>
+  <user>thesaur</user>
+  <email>klaus@capitalfocus.org</email>
+  <active>yes</active>
+ </lead>
+ <date>2009-01-26</date>
+ <time>23:37:31</time>
+ <version>
+  <release>0.6.0beta</release>
+  <api>0.6.0beta</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license>PHP License 3.0</license>
+ <notes>
+Frameset support(?)
+Bug #1913 Notice error generated when array index not set 	thesaur
+Bug #1969 $strHtml not initialized if not using frameset doctype variant 	thesaur
+Bug #2054 4.3.3 	Linux 	page content is copied unnecessarily 	iwarner
+Bug #3259 Remove control-M&apos;s 	iwarner
+Bug #8859 Win XP 	BASE tag 	iwarner
+Request #15512 package2.0 xml doconnor
+ </notes>
+ <contents>
+  <dir baseinstalldir="HTML" name="/">
+   <file baseinstalldir="HTML" md5sum="5fb56d9a11c1e0d83305bcd2b2ab2f11" name="examples/Page2_Complex.php" role="doc" />
+   <file baseinstalldir="HTML" md5sum="55b0a19a5fc028826211d39967bbe8e4" name="examples/Page2_Frameset.php" role="doc" />
+   <file baseinstalldir="HTML" md5sum="19b0d99cddaca3d3aa7dfd298f744794" name="examples/Page2_NoDoctype.php" role="doc" />
+   <file baseinstalldir="HTML" md5sum="4e3a735f881528f8e4a7db43cb14b99b" name="examples/Page2_Simple.php" role="doc" />
+   <file baseinstalldir="HTML" md5sum="2b368d2a951d2b65b2170f2cbf4ef68e" name="Page2/Doctypes.php" role="php" />
+   <file baseinstalldir="HTML" md5sum="9900432dbe749a37aa46c044c40500df" name="Page2/Frameset.php" role="php" />
+   <file baseinstalldir="HTML" md5sum="5529a0259073e004da68144ef1ee04dc" name="Page2/Namespaces.php" role="php" />
+   <file baseinstalldir="HTML" md5sum="9e3695b4b6ffb49d95edeb2c68d43ee8" name="Page2/Frameset/Frame.php" role="php" />
+   <file baseinstalldir="HTML" md5sum="25eb15fbb7706a915c296c3a088e63dc" name="Page2.php" role="php" />
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>4.0.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.5.4</min>
+   </pearinstaller>
+   <package>
+    <name>HTML_Common</name>
+    <channel>pear.php.net</channel>
+    <min>1.2</min>
+   </package>
+  </required>
+ </dependencies>
+ <phprelease />
  <changelog>
   <release>
-    <version>0.5.0beta</version>
-    <date>2003-06-07</date>
-    <state>beta</state>
-    <notes>
+   <version>
+    <release>0.5.0beta</release>
+    <api>0.5.0beta</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2003-06-07</date>
+   <license>PHP License 3.0</license>
+   <notes>
 This release is completely XHTML compliant, and has some great features:
 * Line ending style
 * Full charset support
@@ -74,7 +94,7 @@ This release is completely XHTML compliant, and has some great features:
 * Namespace definitions
 * Mime encoding declaration
 * Global document language
-* Full META tag support, including "http-equiv"
+* Full META tag support, including &quot;http-equiv&quot;
 * Suport for stylesheet and script declarations in the head section
 * Support for linked stylesheets and scripts (including CSS 2.0 media specific definitions)
 * Can output directly to a file
@@ -89,13 +109,34 @@ New features:
 * Basic support for multiple script and style generation (#698)
 
 Bugfixes (since HTML_Page 2.0.0.RC2)
-* #800 (Output "Object" prior to HTML if doctype is unknown)
+* #800 (Output &quot;Object&quot; prior to HTML if doctype is unknown)
 * #950 (fixes reiterative recursion when generating string)
 * #951 (unset META tag was not possible; now use unsetMetaData)
 * Fixed meta tag, title order for pre-XHTML compatibility
 
 # major inline documentation update
-    </notes>
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.6.0beta</release>
+    <api>0.6.0beta</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2009-01-26</date>
+   <license>PHP License 3.0</license>
+   <notes>
+Frameset support(?)
+Bug #1913 Notice error generated when array index not set 	thesaur
+Bug #1969 $strHtml not initialized if not using frameset doctype variant 	thesaur
+Bug #2054 4.3.3 	Linux 	page content is copied unnecessarily 	iwarner
+Bug #3259 Remove control-M&apos;s 	iwarner
+Bug #8859 Win XP 	BASE tag 	iwarner
+Request #15512 package2.0 xml doconnor
+   </notes>
   </release>
  </changelog>
 </package>
