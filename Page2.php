@@ -1608,7 +1608,7 @@ class HTML_Page2 extends HTML_Common {
     /**
      * Generates the document and outputs it to a file.
      * 
-     * <p>Uses {@link file_put_content} when available. Includes a workaround 
+     * <p>Uses {@link file_put_contents} when available. Includes a workaround 
      * for older versions of PHP.</p>
      * 
      * <p>Usage example:</p>
@@ -1630,14 +1630,7 @@ class HTML_Page2 extends HTML_Common {
      */
     function toFile($filename)
     {
-        
-        if (function_exists('file_put_content')){
-            file_put_content($filename, $this->toHtml());
-        } else {
-            $file = fopen($filename,'wb');
-            fwrite($file, $this->toHtml());
-            fclose($file);
-        }
+        file_put_contents($filename, $this->toHtml());
         
         if (!file_exists($filename)){
             PEAR::raiseError("HTML_Page::toFile() error: Failed to write to $filename",0,PEAR_ERROR_TRIGGER);
