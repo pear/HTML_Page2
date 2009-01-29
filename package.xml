@@ -25,8 +25,8 @@ Ideas for use:
   <email>klaus@capitalfocus.org</email>
   <active>yes</active>
  </lead>
- <date>2009-01-26</date>
- <time>23:37:31</time>
+ <date>2009-01-30</date>
+ <time>01:39:27</time>
  <version>
   <release>0.6.0beta</release>
   <api>0.6.0beta</api>
@@ -47,15 +47,33 @@ Request #15512 package2.0 xml doconnor
  </notes>
  <contents>
   <dir baseinstalldir="HTML" name="/">
-   <file baseinstalldir="HTML" md5sum="5fb56d9a11c1e0d83305bcd2b2ab2f11" name="examples/Page2_Complex.php" role="doc" />
-   <file baseinstalldir="HTML" md5sum="55b0a19a5fc028826211d39967bbe8e4" name="examples/Page2_Frameset.php" role="doc" />
-   <file baseinstalldir="HTML" md5sum="19b0d99cddaca3d3aa7dfd298f744794" name="examples/Page2_NoDoctype.php" role="doc" />
-   <file baseinstalldir="HTML" md5sum="4e3a735f881528f8e4a7db43cb14b99b" name="examples/Page2_Simple.php" role="doc" />
-   <file baseinstalldir="HTML" md5sum="2b368d2a951d2b65b2170f2cbf4ef68e" name="Page2/Doctypes.php" role="php" />
-   <file baseinstalldir="HTML" md5sum="9900432dbe749a37aa46c044c40500df" name="Page2/Frameset.php" role="php" />
-   <file baseinstalldir="HTML" md5sum="5529a0259073e004da68144ef1ee04dc" name="Page2/Namespaces.php" role="php" />
-   <file baseinstalldir="HTML" md5sum="9e3695b4b6ffb49d95edeb2c68d43ee8" name="Page2/Frameset/Frame.php" role="php" />
-   <file baseinstalldir="HTML" md5sum="25eb15fbb7706a915c296c3a088e63dc" name="Page2.php" role="php" />
+   <file baseinstalldir="HTML" md5sum="5fb56d9a11c1e0d83305bcd2b2ab2f11" name="examples/Page2_Complex.php" role="doc">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="HTML" md5sum="55b0a19a5fc028826211d39967bbe8e4" name="examples/Page2_Frameset.php" role="doc">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="HTML" md5sum="19b0d99cddaca3d3aa7dfd298f744794" name="examples/Page2_NoDoctype.php" role="doc">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="HTML" md5sum="4e3a735f881528f8e4a7db43cb14b99b" name="examples/Page2_Simple.php" role="doc">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="HTML" md5sum="2b368d2a951d2b65b2170f2cbf4ef68e" name="Page2/Doctypes.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="HTML" md5sum="9900432dbe749a37aa46c044c40500df" name="Page2/Frameset.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="HTML" md5sum="5529a0259073e004da68144ef1ee04dc" name="Page2/Namespaces.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="HTML" md5sum="9e3695b4b6ffb49d95edeb2c68d43ee8" name="Page2/Frameset/Frame.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="HTML" md5sum="1f9045deae5abbfae0730a70f8caac95" name="Page2.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
   </dir>
  </contents>
  <dependencies>
@@ -126,7 +144,7 @@ Bugfixes (since HTML_Page 2.0.0.RC2)
     <release>beta</release>
     <api>beta</api>
    </stability>
-   <date>2009-01-26</date>
+   <date>2009-01-30</date>
    <license>PHP License 3.0</license>
    <notes>
 Frameset support(?)
