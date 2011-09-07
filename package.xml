@@ -25,10 +25,10 @@ Ideas for use:
   <email>klaus@capitalfocus.org</email>
   <active>yes</active>
  </lead>
- <date>2009-01-30</date>
- <time>01:39:27</time>
+ <date>2011-09-07</date>
+ <time>22:57:27</time>
  <version>
-  <release>0.6.0beta</release>
+  <release>0.6.1beta</release>
   <api>0.6.0beta</api>
  </version>
  <stability>
@@ -37,13 +37,7 @@ Ideas for use:
  </stability>
  <license>PHP License 3.0</license>
  <notes>
-Frameset support(?)
-Bug #1913 Notice error generated when array index not set 	thesaur
-Bug #1969 $strHtml not initialized if not using frameset doctype variant 	thesaur
-Bug #2054 4.3.3 	Linux 	page content is copied unnecessarily 	iwarner
-Bug #3259 Remove control-M&apos;s 	iwarner
-Bug #8859 Win XP 	BASE tag 	iwarner
-Request #15512 package2.0 xml doconnor
+ Bug #16570 Doctype System Identifier should be 'w3' not 'w3c'. [kguest]
  </notes>
  <contents>
   <dir baseinstalldir="HTML" name="/">
