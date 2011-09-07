@@ -42,17 +42,17 @@ $default['html']['4.01'][0] = 'HTML 4.01 Strict';
 // XHTML 1.0 Strict
 $doctype['xhtml']['1.0']['strict'][] = '<!DOCTYPE html';
 $doctype['xhtml']['1.0']['strict'][] = '    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"';
-$doctype['xhtml']['1.0']['strict'][] = '    "http://www.w3c.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
+$doctype['xhtml']['1.0']['strict'][] = '    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
 
 // XHTML 1.0 Transitional
 $doctype['xhtml']['1.0']['transitional'][] = '<!DOCTYPE html';
 $doctype['xhtml']['1.0']['transitional'][] = '    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"';
-$doctype['xhtml']['1.0']['transitional'][] = '    "http://www.w3c.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
+$doctype['xhtml']['1.0']['transitional'][] = '    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
 
 // XHTML 1.0 Frameset
 $doctype['xhtml']['1.0']['frameset'][] = '<!DOCTYPE html';
 $doctype['xhtml']['1.0']['frameset'][] = '    PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN"';
-$doctype['xhtml']['1.0']['frameset'][] = '    "http://www.w3c.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">';
+$doctype['xhtml']['1.0']['frameset'][] = '    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">';
 
 // all ready for this :)
 // XHTML 1.1
