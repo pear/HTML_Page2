@@ -376,6 +376,15 @@ class HTML_Page2 extends HTML_Common {
     var $frameset;
 
     /**
+     * Array of raw header data
+     *
+     * @var array
+     * @access private
+     * @since 2.0
+     */
+    var $_rawHeaderData = array();
+
+    /**
      * Class constructor.
      *
      * <p>Accepts an array of attributes</p>
@@ -748,6 +757,10 @@ class HTML_Page2 extends HTML_Common {
                 $strHtml .= $tabs . $tab . '</script>' . $lnEnd;
             }
         } // end generating script blocks
+
+        foreach ($this->_rawHeaderData as $content) {
+            $strHtml .= $content . $lnEnd;
+        }
 
         // Close tag
         $strHtml .=  $tabs . '</head>' . $lnEnd;
@@ -1697,5 +1710,18 @@ class HTML_Page2 extends HTML_Common {
 
     } // end func display
 
+    /**
+     * Adds raw data to the head of the document
+     * 
+     * <p>Use this function to add raw data strings to the header.</p>
+     *
+     * @access   public
+     * @param    string  $content    Raw data to be added.
+     * @return   void
+     */
+    function addRawHeaderData($content)
+    {
+         $this->_rawHeaderData[] = $content;
+    }
 }
 ?>
