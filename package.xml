@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package packagerversion="1.8.0alpha1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+<package packagerversion="1.9.4" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
  <name>HTML_Page2</name>
  <channel>pear.php.net</channel>
  <summary>PEAR::HTML_Page2 is a base class for XHTML page generation.</summary>
@@ -25,8 +25,8 @@ Ideas for use:
   <email>klaus@capitalfocus.org</email>
   <active>yes</active>
  </lead>
- <date>2011-09-07</date>
- <time>23:47:27</time>
+ <date>2011-12-10</date>
+ <time>12:24:42</time>
  <version>
   <release>0.6.2</release>
   <api>0.6.0beta</api>
@@ -37,37 +37,28 @@ Ideas for use:
  </stability>
  <license>PHP License 3.0</license>
  <notes>
- Bug #12769: Omit CDATA for inline styles containing @import-rule [kguest]
+Bug #12769: Omit CDATA for inline styles containing @import-rule [kguest]
  </notes>
  <contents>
-  <dir baseinstalldir="HTML" name="/">
-   <file baseinstalldir="HTML" md5sum="5fb56d9a11c1e0d83305bcd2b2ab2f11" name="examples/Page2_Complex.php" role="doc">
+  <dir baseinstalldir="/" name="/">
+   <file baseinstalldir="HTML" md5sum="30435bca7d07bdffeb57f3d8334d1566" name="examples/Page2_Complex.php" role="doc">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
    </file>
-   <file baseinstalldir="HTML" md5sum="55b0a19a5fc028826211d39967bbe8e4" name="examples/Page2_Frameset.php" role="doc">
+   <file baseinstalldir="HTML" md5sum="33bb94cad972c33bf0284512f93262aa" name="examples/Page2_Frameset.php" role="doc">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
    </file>
-   <file baseinstalldir="HTML" md5sum="19b0d99cddaca3d3aa7dfd298f744794" name="examples/Page2_NoDoctype.php" role="doc">
+   <file baseinstalldir="HTML" md5sum="22923e752378af87227458d82cedefbb" name="examples/Page2_NoDoctype.php" role="doc">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
    </file>
-   <file baseinstalldir="HTML" md5sum="4e3a735f881528f8e4a7db43cb14b99b" name="examples/Page2_Simple.php" role="doc">
+   <file baseinstalldir="HTML" md5sum="585b2c8ad3dac28bf31a625eb54a0a20" name="examples/Page2_Simple.php" role="doc">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
    </file>
-   <file baseinstalldir="HTML" md5sum="2b368d2a951d2b65b2170f2cbf4ef68e" name="Page2/Doctypes.php" role="php">
-    <tasks:replace from="@package_version@" to="version" type="package-info" />
-   </file>
-   <file baseinstalldir="HTML" md5sum="9900432dbe749a37aa46c044c40500df" name="Page2/Frameset.php" role="php">
-    <tasks:replace from="@package_version@" to="version" type="package-info" />
-   </file>
-   <file baseinstalldir="HTML" md5sum="5529a0259073e004da68144ef1ee04dc" name="Page2/Namespaces.php" role="php">
-    <tasks:replace from="@package_version@" to="version" type="package-info" />
-   </file>
-   <file baseinstalldir="HTML" md5sum="9e3695b4b6ffb49d95edeb2c68d43ee8" name="Page2/Frameset/Frame.php" role="php">
-    <tasks:replace from="@package_version@" to="version" type="package-info" />
-   </file>
-   <file baseinstalldir="HTML" md5sum="1f9045deae5abbfae0730a70f8caac95" name="Page2.php" role="php">
-    <tasks:replace from="@package_version@" to="version" type="package-info" />
-   </file>
+   <file baseinstalldir="/" md5sum="f1c0969e8b44eca92aa9c47a97b9410c" name="HTML/Page2.php" role="php" />
+   <file baseinstalldir="/" md5sum="a1e0fa98350bcc0df85391cec1c63375" name="HTML/Page2/Doctypes.php" role="php" />
+   <file baseinstalldir="/" md5sum="6514d6182bc4e0260fbd7597bfc9e17d" name="HTML/Page2/Frameset.php" role="php" />
+   <file baseinstalldir="/" md5sum="7e0174df3effce51a64bc2370cc09967" name="HTML/Page2/Namespaces.php" role="php" />
+   <file baseinstalldir="/" md5sum="b3334907675cc6ab09ee2e12d58880cf" name="HTML/Page2/Frameset/Frame.php" role="php" />
+   <file baseinstalldir="/" md5sum="287223e03903a590092979e82e1b44d8" name="README" role="data" />
   </dir>
  </contents>
  <dependencies>
@@ -162,7 +153,22 @@ Request #15512 package2.0 xml doconnor
    <date>2011-09-07</date>
    <license>PHP License 3.0</license>
    <notes>
-Bug #16570 Doctype System Identifier should be 'w3' not 'w3c'. [kguest]
+Bug #16570 Doctype System Identifier should be &apos;w3&apos; not &apos;w3c&apos;. [kguest]
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.6.2</release>
+    <api>0.6.0beta</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2011-12-10</date>
+   <license>PHP License 3.0</license>
+   <notes>
+Bug #12769: Omit CDATA for inline styles containing @import-rule [kguest]
    </notes>
   </release>
  </changelog>
