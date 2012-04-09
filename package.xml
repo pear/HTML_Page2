@@ -25,10 +25,10 @@ Ideas for use:
   <email>klaus@capitalfocus.org</email>
   <active>yes</active>
  </lead>
- <date>2011-12-10</date>
- <time>12:24:42</time>
+ <date>2012-04-10</date>
+ <time>02:21:07</time>
  <version>
-  <release>0.6.2</release>
+  <release>0.6.3</release>
   <api>0.6.0beta</api>
  </version>
  <stability>
@@ -37,7 +37,9 @@ Ideas for use:
  </stability>
  <license>PHP License 3.0</license>
  <notes>
-Bug #12769: Omit CDATA for inline styles containing @import-rule [kguest]
+QA release
+
+Request #3204	Adding Raw entries to the Header
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -169,6 +171,23 @@ Bug #16570 Doctype System Identifier should be &apos;w3&apos; not &apos;w3c&apos
    <license>PHP License 3.0</license>
    <notes>
 Bug #12769: Omit CDATA for inline styles containing @import-rule [kguest]
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.6.3</release>
+    <api>0.6.0beta</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2012-04-10</date>
+   <license>PHP License 3.0</license>
+   <notes>
+QA release
+
+Request #3204	Adding Raw entries to the Header
    </notes>
   </release>
  </changelog>
