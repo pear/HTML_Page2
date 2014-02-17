@@ -8,7 +8,7 @@
     ],
     "autoload": {
         "psr-0": {
-            "HTML_Page2": "./"
+            "HTML": "./"
         }
     },
     "description": "More info available on: http://pear.php.net/package/HTML_Page2",
@@ -23,7 +23,8 @@
     },
     "type": "library",
     "require": {
-        "pear/pear_exception": "*"
+        "pear/pear_exception": "*",
+        "pear/html_common": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "*"
