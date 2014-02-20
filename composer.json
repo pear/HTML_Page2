@@ -1,0 +1,32 @@
+{
+    "authors": [
+        {
+            "email": "klaus@capitalfocus.org",
+            "name": "Klaus Guenther",
+            "role": "Lead"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "HTML": "./"
+        }
+    },
+    "description": "More info available on: http://pear.php.net/package/HTML_Page2",
+    "include-path": [
+        "./"
+    ],
+    "license": "PHP License 3.0",
+    "name": "pear/html_page2",
+    "support": {
+        "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=HTML_Page2",
+        "source": "https://github.com/pear/HTML_Page2"
+    },
+    "type": "library",
+    "require": {
+        "pear/pear_exception": "*",
+        "pear/html_common": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    }
+}
