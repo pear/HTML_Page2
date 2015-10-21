@@ -25,10 +25,10 @@ Ideas for use:
   <email>klaus@capitalfocus.org</email>
   <active>yes</active>
  </lead>
- <date>2012-04-09</date>
- <time>17:22:12</time>
+ <date>2015-10-21</date>
+ <time>21:22:12</time>
  <version>
-  <release>0.6.3</release>
+  <release>0.6.4</release>
   <api>0.6.0beta</api>
  </version>
  <stability>
@@ -39,7 +39,7 @@ Ideas for use:
  <notes>
 QA release
 
-Request #3204	Adding Raw entries to the Header
+Request #20952	Add "getBodyContent()" method
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -188,6 +188,23 @@ Bug #12769: Omit CDATA for inline styles containing @import-rule [kguest]
 QA release
 
 Request #3204	Adding Raw entries to the Header
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.6.4</release>
+    <api>0.6.0beta</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2015-10-21</date>
+   <license>PHP License 3.0</license>
+   <notes>
+QA release
+
+Request #20952	Add "getBodyContent()" method [kguest]
    </notes>
   </release>
  </changelog>
