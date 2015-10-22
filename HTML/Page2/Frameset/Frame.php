@@ -40,7 +40,7 @@ class HTML_Page2_Frameset_Frame extends HTML_Common
 {
     var $xhtml;
     
-    function HTML_Page2_Frameset_Frame($options = array())
+    public function HTML_Page2_Frameset_Frame($options = array())
     {
         if (isset($options['name'])) {
             $this->setAttributes(array('name' => $options['name']));
@@ -53,7 +53,7 @@ class HTML_Page2_Frameset_Frame extends HTML_Common
         }
     } // end func constructor
     
-    function setScrolling($string = '')
+    public function setScrolling($string = '')
     {
         if ($string !== '') {
             $this->updateAttributes(array('scrolling' => $string));
@@ -62,7 +62,7 @@ class HTML_Page2_Frameset_Frame extends HTML_Common
         }
     } // end func setScrolling
     
-    function setLongDescription($location = '')
+    public function setLongDescription($location = '')
     {
         if ($location !== ''){
             $this->updateAttributes(array('longdesc' => $location));
@@ -71,17 +71,17 @@ class HTML_Page2_Frameset_Frame extends HTML_Common
         }
     } // end func setSource
     
-    function setSource($location)
+    public function setSource($location)
     {
         $this->updateAttributes(array('src' => $location));
     } // end func setSource
     
-    function setTarget($name = '_self')
+    public function setTarget($name = '_self')
     {
         $this->updateAttributes(array('target' => $name));
     } // end func setTarget
     
-    function toHtml()
+    public function toHtml()
     {
         if ($this->xhtml === true) {
             $tagEnd = ' />';

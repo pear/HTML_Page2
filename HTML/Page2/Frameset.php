@@ -49,7 +49,7 @@ class HTML_Page2_Frameset extends HTML_Common
     var $_type = '';
     var $xhtml = false;
     
-    function HTML_Page2_Frameset($options = array())
+    public function HTML_Page2_Frameset($options = array())
     {
         if (isset($options['master'])) {
             $this->_master = $options['master'];
@@ -59,7 +59,7 @@ class HTML_Page2_Frameset extends HTML_Common
         }
     } // end constructor
     
-    function addRows($rows = array())
+    public function addRows($rows = array())
     {
         
         if (isset($this->_cols)) {
@@ -69,7 +69,7 @@ class HTML_Page2_Frameset extends HTML_Common
         $this->_rows = $rows;
     } // end func addRows
     
-    function addColumns($cols = array())
+    public function addColumns($cols = array())
     {
         
         if (isset($this->_rows)) {
@@ -79,7 +79,7 @@ class HTML_Page2_Frameset extends HTML_Common
         $this->_cols = $cols;
     } // end func addColumns
     
-    function addFrame($name, $source, $target = '_self')
+    public function addFrame($name, $source, $target = '_self')
     {
         $this->$name = new HTML_Page2_Frameset_Frame(array('name'   => $name, 
                                                            'src'    => $source,
@@ -87,12 +87,12 @@ class HTML_Page2_Frameset extends HTML_Common
                                                            ));
     } // end func addFrame
     
-    function addFrameset($name)
+    public function addFrameset($name)
     {
         $this->$name = new HTML_Page2_Frameset();
     } // end func addFrame
     
-    function toHTML()
+    public function toHTML()
     {
         // get line endings
         $lnEnd  = $this->_getLineEnd();
