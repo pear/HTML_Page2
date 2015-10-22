@@ -42,12 +42,11 @@ require_once 'HTML/Page2/Frameset/Frame.php';
 
 class HTML_Page2_Frameset extends HTML_Common
 {
-    
-    var $_master = false;
-    var $_rows = array();
-    var $_cols = array();
-    var $_type = '';
-    var $xhtml = false;
+    protected $_master = false;
+    protected $_rows = array();
+    protected $_cols = array();
+    protected $_type = '';
+    protected $xhtml = false;
     
     public function HTML_Page2_Frameset($options = array())
     {
