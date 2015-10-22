@@ -1,0 +1,5 @@
+<phpunit colors="true" verbose="true">
+    <testsuite name="Default Test Suite">
+        <directory>./</directory>
+    </testsuite>
+</phpunit>
