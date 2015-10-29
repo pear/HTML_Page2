@@ -227,7 +227,7 @@ class HTML_Page2 extends HTML_Common
      * @var    array
      * @since  2.0
      */
-    private $_body = array();
+    private $_body = [];
 
     /**
      * Controls caching of the page
@@ -251,11 +251,11 @@ class HTML_Page2 extends HTML_Common
      * @var    array
      * @since  2.0
      */
-    private $_doctype = array(
+    private $_doctype = [
         'type'=>'xhtml',
         'version'=>'1.0',
         'variant'=>'transitional'
-    );
+    ];
 
     /**
      * Contains the page language setting
@@ -271,7 +271,7 @@ class HTML_Page2 extends HTML_Common
      * @var    array
      * @since  2.0
      */
-    private $_links = array();
+    private $_links = [];
 
     /**
      * Array of meta tags
@@ -279,9 +279,9 @@ class HTML_Page2 extends HTML_Common
      * @var    array
      * @since  2.0
      */
-    private $_metaTags = array(
-        'standard' => array('Generator' => 'PEAR HTML_Page')
-    );
+    private $_metaTags = [
+        'standard' => ['Generator' => 'PEAR HTML_Page']
+    ];
 
     /**
      * Document mime type
@@ -313,7 +313,7 @@ class HTML_Page2 extends HTML_Common
      * @var    array
      * @since  2.0
      */
-    private $_scripts = array();
+    private $_scripts = [];
 
     /**
      * Array of scripts placed in the header
@@ -321,7 +321,7 @@ class HTML_Page2 extends HTML_Common
      * @var    array
      * @since  2.0
      */
-    private $_script = array();
+    private $_script = [];
 
     /**
      * Suppresses doctype
@@ -337,7 +337,7 @@ class HTML_Page2 extends HTML_Common
      * @var    array
      * @since  2.0
      */
-    private $_style = array();
+    private $_style = [];
 
     /**
      * Array of linked style sheets
@@ -345,7 +345,7 @@ class HTML_Page2 extends HTML_Common
      * @var    array
      * @since  2.0
      */
-    private $_styleSheets = array();
+    private $_styleSheets = [];
 
     /**
      * HTML page title
@@ -377,7 +377,7 @@ class HTML_Page2 extends HTML_Common
      * @var    array
      * @since  2.0
      */
-    private $_rawHeaderData = array();
+    private $_rawHeaderData = [];
 
     /**
      * Class constructor.
@@ -415,7 +415,7 @@ class HTML_Page2 extends HTML_Common
      * @since  2.0
      * @return void
      */
-    public function HTML_Page2($attributes = array())
+    public function HTML_Page2($attributes = [])
     {
 
         if ($attributes) {
@@ -934,15 +934,15 @@ class HTML_Page2 extends HTML_Common
         $elements = count($split);
 
         if (isset($split[2])) {
-            $array = array(
+            $array = [
                 'type'=>$split[0],
                 'version' => $split[1],
                 'variant' => $split[2]
-            );
+            ];
         } elseif (isset($split[1])) {
-            $array = array('type'=>$split[0],'version'=>$split[1]);
+            $array = ['type'=>$split[0],'version'=>$split[1]];
         } else {
-            $array = array('type'=>$split[0]);
+            $array = ['type'=>$split[0]];
         }
 
         return $array;
@@ -1077,7 +1077,7 @@ class HTML_Page2 extends HTML_Common
      *
      * @return void
      */
-    public function addHeadLink($href, $relation, $relType = 'rel', $attributes = array())
+    public function addHeadLink($href, $relation, $relType = 'rel', $attributes = [])
     {
         $attributes = $this->_parseAttributes($attributes);
         $tag = $this->_getAttrString($attributes);
@@ -1255,7 +1255,7 @@ class HTML_Page2 extends HTML_Common
      */
     public function unsetBody()
     {
-        $this->_body = array();
+        $this->_body = [];
     } // end unsetBody
 
     /**
@@ -1340,7 +1340,7 @@ class HTML_Page2 extends HTML_Common
         $this->_doctype = $this->_parseDoctypeString($type);
         if ($this->_doctype['variant'] == 'frameset') {
 
-            $options = array('master' => true);
+            $options = ['master' => true];
             if ($this->_doctype['type'] == 'xhtml') {
                 $options['xhtml'] = true;
             }

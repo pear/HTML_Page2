@@ -27,7 +27,7 @@ require_once "HTML/Page2.php";
 //    -> language = en
 //    -> cache = false
 
-$page = new HTML_Page2(array('doctype'=>'none','tab'=>'  '));
+$page = new HTML_Page2(['doctype'=>'none','tab'=>'  ']);
 
 // "simple" Page title defaults to "New Page"
 
