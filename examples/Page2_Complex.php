@@ -56,13 +56,13 @@ for ($R = 0; $R <= 255; $R += 51) {
 // to specify everything. For example, the proper namespace
 // is chosen by default.
 
-$page = new HTML_Page2(array ( 
+$page = new HTML_Page2([ 
                            'lineend'   => 'unix',
                            'doctype'   => 'XHTML 1.0 Strict',
                            'language'  => 'en',
                            'cache'     => 'false',
                            'tab'       => '  '
-                         ));
+                         ]);
  
 // Page title defaults to "New $doctypeString Compliant Page"
 $page->setTitle("HTML_Page2 Color Chart example");

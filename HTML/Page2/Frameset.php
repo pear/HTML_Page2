@@ -43,12 +43,12 @@ require_once 'HTML/Page2/Frameset/Frame.php';
 class HTML_Page2_Frameset extends HTML_Common
 {
     protected $_master = false;
-    protected $_rows = array();
-    protected $_cols = array();
+    protected $_rows = [];
+    protected $_cols = [];
     protected $_type = '';
     protected $xhtml = false;
     
-    public function HTML_Page2_Frameset($options = array())
+    public function HTML_Page2_Frameset($options = [])
     {
         if (isset($options['master'])) {
             $this->_master = $options['master'];
@@ -58,21 +58,21 @@ class HTML_Page2_Frameset extends HTML_Common
         }
     } // end constructor
     
-    public function addRows($rows = array())
+    public function addRows($rows = [])
     {
         
         if (isset($this->_cols)) {
-            $this->_cols = array();
+            $this->_cols = [];
         }
         
         $this->_rows = $rows;
     } // end func addRows
     
-    public function addColumns($cols = array())
+    public function addColumns($cols = [])
     {
         
         if (isset($this->_rows)) {
-            $this->_rows = array();
+            $this->_rows = [];
         }
         
         $this->_cols = $cols;
@@ -80,10 +80,10 @@ class HTML_Page2_Frameset extends HTML_Common
     
     public function addFrame($name, $source, $target = '_self')
     {
-        $this->$name = new HTML_Page2_Frameset_Frame(array('name'   => $name, 
+        $this->$name = new HTML_Page2_Frameset_Frame(['name'   => $name, 
                                                            'src'    => $source,
                                                            'target' => $target
-                                                           ));
+                                                           ]);
     } // end func addFrame
     
     public function addFrameset($name)

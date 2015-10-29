@@ -20,21 +20,21 @@
 
 require_once 'HTML/Page2.php';
 
-$page = new HTML_Page2(array(
+$page = new HTML_Page2([
                              'doctype' => 'XHTML 1.0 Frameset',
                              'tab' => '  '
-                             ));
+                             ]);
 // Page title defaults to "New XHTML 1.0 Frameset Compliant Page"
 
 $page->addBodyContent('<p>Your browser does not support frames.</p>');
 
-$page->frameset->addRows(array('logo' => 200, 'bottom' => '*'));
+$page->frameset->addRows(['logo' => 200, 'bottom' => '*']);
 
 $page->frameset->addFrame('logo', 'logo.htm');
 $page->frameset->logo->setScrolling('no');
 
 $page->frameset->addFrameset('bottom');
-$page->frameset->bottom->addColumns(array('menu' => 200, 'main' => '*'));
+$page->frameset->bottom->addColumns(['menu' => 200, 'main' => '*']);
 $page->frameset->bottom->addFrame('menu', 'menu.htm', 'main');
 $page->frameset->bottom->addFrame('main', 'main.htm', 'main');
 
