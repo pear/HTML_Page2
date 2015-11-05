@@ -724,8 +724,31 @@ class HTML_Page2 extends HTML_Common
 
         // Generate script file links
         foreach ($this->_scripts as $strSrc => $strType) {
-            $strHtml .= $tabs . $tab
-                . "<script type=\"$strType\" src=\"$strSrc\"></script>" . $lnEnd;
+            if (is_string($strType))
+            {
+                $strHtml .= $tabs . $tab
+                    . "<script type=\"$strType\" src=\"$strSrc\"></script>" . $lnEnd;
+            }
+            elseif (is_array($strType))
+            {
+                $type = isset($strType['type']) ? $strType['type'] : 'text/javascript';
+                $execute = isset($strType['execute']) ? $strType['execute'] : 'immediate';
+
+                $strHtml .= $tabs . $tab . '<script type="'.$type.'" src="'.$strSrc.'"';
+                if ($execute == 'async' || $execute == 'defer')
+                {
+                    if ($this->_mime == "text/xhtml")
+                    {
+                        $strHtml .= ' '.$execute.'="'.$execute.'"';
+                    }
+                    else
+                    {
+                        $strHtml .= ' '.$execute;
+                    }
+                }
+                    $strHtml .= '>';
+                    $strHtml .= '</script>' . $lnEnd;
+            }
         }
 
         // Generate script declarations

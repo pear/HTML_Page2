@@ -19,8 +19,9 @@
 // $Id$
 
 /**
- * The PEAR::HTML_Page2 package provides a simple interface for generating an XHTML compliant page
- * 
+ * The PEAR::HTML_Page2 package provides a simple interface for
+ * generating an XHTML compliant page
+ *
  * @category HTML
  * @package  HTML_Page2
  * @version  @package_version@
@@ -47,7 +48,14 @@ class HTML_Page2_Frameset extends HTML_Common
     protected $_type = '';
     protected $xhtml = false;
 
-    public function HTML_Page2_Frameset($options = [])
+    /**
+     * __construct
+     *
+     * @param array $options Associative array
+     *
+     * @return HTML_Page2_Frameset
+     */
+    public function __construct($options = [])
     {
         if (isset($options['master'])) {
             $this->_master = $options['master'];
@@ -57,6 +65,13 @@ class HTML_Page2_Frameset extends HTML_Common
         }
     } // end constructor
 
+    /**
+     * Add rows
+     *
+     * @param array $rows Associative array describing rows to add.
+     *
+     * @return void
+     */
     public function addRows($rows = [])
     {
 
@@ -67,6 +82,13 @@ class HTML_Page2_Frameset extends HTML_Common
         $this->_rows = $rows;
     } // end func addRows
 
+    /**
+     * Add columns
+     *
+     * @param array $cols Associative array describing columns.
+     *
+     * @return void
+     */
     public function addColumns($cols = [])
     {
 
@@ -77,6 +99,15 @@ class HTML_Page2_Frameset extends HTML_Common
         $this->_cols = $cols;
     } // end func addColumns
 
+    /**
+     * Add frame.
+     *
+     * @param string $name   Name of frame
+     * @param string $source SRC attribute
+     * @param string $target target, optional, defaults to _self
+     *
+     * @return void
+     */
     public function addFrame($name, $source, $target = '_self')
     {
         $this->$name = new HTML_Page2_Frameset_Frame(
@@ -88,6 +119,13 @@ class HTML_Page2_Frameset extends HTML_Common
         );
     } // end func addFrame
 
+    /**
+     * Add a frameset.
+     *
+     * @param string $name Name of frameset to add.
+     *
+     * @return void
+     */
     public function addFrameset($name)
     {
         $this->$name = new HTML_Page2_Frameset();
