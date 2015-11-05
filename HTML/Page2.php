@@ -224,32 +224,32 @@ class HTML_Page2 extends HTML_Common
     /**
      * Contains the content of the <body> tag.
      *
-     * @var    array
-     * @since  2.0
+     * @var   array
+     * @since 2.0
      */
     private $_body = [];
 
     /**
      * Controls caching of the page
      *
-     * @var    bool
-     * @since  2.0
+     * @var   bool
+     * @since 2.0
      */
     private $_cache = false;
 
     /**
      * Contains the character encoding string
      *
-     * @var    string
-     * @since  2.0
+     * @var   string
+     * @since 2.0
      */
     private $_charset = 'utf-8';
 
     /**
      * Contains the !DOCTYPE definition
      *
-     * @var    array
-     * @since  2.0
+     * @var   array
+     * @since 2.0
      */
     private $_doctype = [
         'type'=>'xhtml',
@@ -260,24 +260,24 @@ class HTML_Page2 extends HTML_Common
     /**
      * Contains the page language setting
      *
-     * @var    string
-     * @since  2.0
+     * @var   string
+     * @since 2.0
      */
     private $_language = 'en';
 
     /**
      * Array of Header <link> tags
      *
-     * @var    array
-     * @since  2.0
+     * @var   array
+     * @since 2.0
      */
     private $_links = [];
 
     /**
      * Array of meta tags
      *
-     * @var    array
-     * @since  2.0
+     * @var   array
+     * @since 2.0
      */
     private $_metaTags = [
         'standard' => ['Generator' => 'PEAR HTML_Page']
@@ -286,96 +286,96 @@ class HTML_Page2 extends HTML_Common
     /**
      * Document mime type
      *
-     * @var    string
-     * @since  2.0
+     * @var   string
+     * @since 2.0
      */
     private $_mime = 'text/html';
 
     /**
      * Document namespace
      *
-     * @var    string
-     * @since  2.0
+     * @var   string
+     * @since 2.0
      */
     private $_namespace = '';
 
     /**
      * Document profile
      *
-     * @var    string
-     * @since  2.0
+     * @var   string
+     * @since 2.0
      */
     private $_profile = '';
 
     /**
      * Array of linked scripts
      *
-     * @var    array
-     * @since  2.0
+     * @var   array
+     * @since 2.0
      */
     private $_scripts = [];
 
     /**
      * Array of scripts placed in the header
      *
-     * @var    array
-     * @since  2.0
+     * @var   array
+     * @since 2.0
      */
     private $_script = [];
 
     /**
      * Suppresses doctype
      *
-     * @var    bool
-     * @since  2.0
+     * @var   bool
+     * @since 2.0
      */
     private $_simple = false;
 
     /**
      * Array of included style declarations
      *
-     * @var    array
-     * @since  2.0
+     * @var   array
+     * @since 2.0
      */
     private $_style = [];
 
     /**
      * Array of linked style sheets
      *
-     * @var    array
-     * @since  2.0
+     * @var   array
+     * @since 2.0
      */
     private $_styleSheets = [];
 
     /**
      * HTML page title
      *
-     * @var    string
-     * @since  2.0
+     * @var   string
+     * @since 2.0
      */
     private $_title = '';
 
     /**
      * Defines whether XML prolog should be prepended to XHTML documents
      *
-     * @var    bool
-     * @since  2.0
+     * @var   bool
+     * @since 2.0
      */
     private $_xmlProlog = true;
 
     /**
      * Contains an instance of {@see HTML_Page2_Frameset}
      *
-     * @var    object
-     * @since  2.0
+     * @var   object
+     * @since 2.0
      */
     public $frameset;
 
     /**
      * Array of raw header data
      *
-     * @var    array
-     * @since  2.0
+     * @var   array
+     * @since 2.0
      */
     private $_rawHeaderData = [];
 
@@ -485,9 +485,10 @@ class HTML_Page2 extends HTML_Common
      *
      * @return string
      */
-    protected function _elementToHtml(&$element) // It's a reference just to save some memory.
+    protected function _elementToHtml(&$element)
     {
 
+        // element is passed as a reference just to save some memory.
         // get the special formatting settings
         $lnEnd  = $this->_getLineEnd();
         $tab    = $this->_getTab();
@@ -1057,8 +1058,9 @@ class HTML_Page2 extends HTML_Common
      *
      * @return void
      */
-    public function addFavicon($href, $type = 'image/x-icon', $relation = 'shortcut icon')
-    {
+    public function addFavicon(
+        $href, $type = 'image/x-icon', $relation = 'shortcut icon'
+    ) {
         $this->_links[] = "<link href=\"$href\" rel=\"$relation\" type=\"$type\"";
     } // end func addFavicon
 

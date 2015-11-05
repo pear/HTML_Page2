@@ -41,36 +41,47 @@ $default['html']['4.01'][0] = 'HTML 4.01 Strict';
 
 // XHTML 1.0 Strict
 $doctype['xhtml']['1.0']['strict'][] = '<!DOCTYPE html';
-$doctype['xhtml']['1.0']['strict'][] = '    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"';
-$doctype['xhtml']['1.0']['strict'][] = '    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
+$doctype['xhtml']['1.0']['strict'][]
+    = '    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"';
+$doctype['xhtml']['1.0']['strict'][]
+    = '    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
 
 // XHTML 1.0 Transitional
 $doctype['xhtml']['1.0']['transitional'][] = '<!DOCTYPE html';
-$doctype['xhtml']['1.0']['transitional'][] = '    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"';
-$doctype['xhtml']['1.0']['transitional'][] = '    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
+$doctype['xhtml']['1.0']['transitional'][]
+    = '    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"';
+$doctype['xhtml']['1.0']['transitional'][]
+    = '    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
 
 // XHTML 1.0 Frameset
 $doctype['xhtml']['1.0']['frameset'][] = '<!DOCTYPE html';
-$doctype['xhtml']['1.0']['frameset'][] = '    PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN"';
-$doctype['xhtml']['1.0']['frameset'][] = '    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">';
+$doctype['xhtml']['1.0']['frameset'][]
+    = '    PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN"';
+$doctype['xhtml']['1.0']['frameset'][]
+    = '    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">';
 
 // all ready for this :)
 // XHTML 1.1
 $doctype['xhtml']['1.1'][] = '<!DOCTYPE html';
 $doctype['xhtml']['1.1'][] = '    PUBLIC "-//W3C//DTD XHTML 1.1//EN"';
-$doctype['xhtml']['1.1'][] = '    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">';
+$doctype['xhtml']['1.1'][]
+    = '    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">';
 
 // XHTML Basic 1.0
 $doctype['xhtml']['basic']['1.0'][] = '<!DOCTYPE html';
-$doctype['xhtml']['basic']['1.0'][] = '    PUBLIC "-//W3C//DTD XHTML Basic 1.0//EN"';
-$doctype['xhtml']['basic']['1.0'][] = '    "http://www.w3.org/TR/xhtml-basic/xhtml-basic10.dtd">';
+$doctype['xhtml']['basic']['1.0'][]
+    = '    PUBLIC "-//W3C//DTD XHTML Basic 1.0//EN"';
+$doctype['xhtml']['basic']['1.0'][]
+    = '    "http://www.w3.org/TR/xhtml-basic/xhtml-basic10.dtd">';
 
 // XHTML Print 1.0
 // from the W3C Candidate Recommendation 20 January 2004
-// http://www.w3.org/TR/2004/CR-xhtml-print-20040120 
+// http://www.w3.org/TR/2004/CR-xhtml-print-20040120
 $doctype['xhtml']['print']['1.0'][] = '<!DOCTYPE html"';
-$doctype['xhtml']['print']['1.0'][] = '    PUBLIC "-//W3C//DTD XHTML-Print 1.0//EN"';
-$doctype['xhtml']['print']['1.0'][] = '    "http://www.w3.org/MarkUp/DTD/xhtml-print10.dtd">';
+$doctype['xhtml']['print']['1.0'][]
+    = '    PUBLIC "-//W3C//DTD XHTML-Print 1.0//EN"';
+$doctype['xhtml']['print']['1.0'][]
+    = '    "http://www.w3.org/MarkUp/DTD/xhtml-print10.dtd">';
 
 // XHTML 2.0
 // from the W3C Working Draft 6 May 2003
@@ -80,36 +91,49 @@ $doctype['xhtml']['2.0'][] = '    PUBLIC "-//W3C//DTD XHTML 2.0//EN"';
 $doctype['xhtml']['2.0'][] = '    "TBD">';
 
 // HTML 4.01 Strict
-$doctype['html']['4.01']['strict'][] = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"';
-$doctype['html']['4.01']['strict'][] = '        "http://www.w3.org/TR/html4/strict.dtd">';
+$doctype['html']['4.01']['strict'][]
+    = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"';
+$doctype['html']['4.01']['strict'][]
+    = '        "http://www.w3.org/TR/html4/strict.dtd">';
 
 // HTML 4.01 Transitional
-$doctype['html']['4.01']['transitional'][] = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"';
-$doctype['html']['4.01']['transitional'][] = '        "http://www.w3.org/TR/html4/loose.dtd">';
+$doctype['html']['4.01']['transitional'][]
+    = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"';
+$doctype['html']['4.01']['transitional'][]
+    = '        "http://www.w3.org/TR/html4/loose.dtd">';
 
 // HTML 4.01 Frameset
-$doctype['html']['4.01']['frameset'][] = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"';
-$doctype['html']['4.01']['frameset'][] = '        "http://www.w3.org/TR/html4/frameset.dtd">';
+$doctype['html']['4.01']['frameset'][]
+    = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"';
+$doctype['html']['4.01']['frameset'][]
+    = '        "http://www.w3.org/TR/html4/frameset.dtd">';
 
 // HTML 4.0 Strict
-$doctype['html']['4.0']['strict'][] = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"';
-$doctype['html']['4.0']['strict'][] = '        "http://www.w3.org/TR/REC-html40/strict.dtd">';
+$doctype['html']['4.0']['strict'][]
+    = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"';
+$doctype['html']['4.0']['strict'][]
+    = '        "http://www.w3.org/TR/REC-html40/strict.dtd">';
 
 // HTML 4.0 Transitional
-$doctype['html']['4.0']['transitional'][] = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"';
-$doctype['html']['4.0']['transitional'][] = '        "http://www.w3.org/TR/REC-html40/loose.dtd">';
+$doctype['html']['4.0']['transitional'][]
+    = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"';
+$doctype['html']['4.0']['transitional'][]
+    = '        "http://www.w3.org/TR/REC-html40/loose.dtd">';
 
 // HTML 4.0 Frameset
-$doctype['html']['4.0']['frameset'][] = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Frameset//EN"';
-$doctype['html']['4.0']['frameset'][] = '        "http://www.w3.org/TR/REC-html40/frameset.dtd">';
+$doctype['html']['4.0']['frameset'][]
+    = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Frameset//EN"';
+$doctype['html']['4.0']['frameset'][]
+    = '        "http://www.w3.org/TR/REC-html40/frameset.dtd">';
 
-// Since the following is simply historic, I'm not adding the level 1 & 2 or strict stuff.
+// Since the following is simply historic, I'm not adding the
+// level 1 & 2 or strict stuff.
 // This doctype should be sufficient for most historic uses.
 
 // HTML 2.0
 $doctype['html']['2.0'][] = '<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">';
 
 // HTML 3.2
-$doctype['html']['3.2'][] = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">';
-
+$doctype['html']['3.2'][]
+    = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">';
 ?>

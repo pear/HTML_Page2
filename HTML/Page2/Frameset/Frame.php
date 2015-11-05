@@ -28,7 +28,7 @@
  * @license  http://www.php.net/license/3_0.txt PHP License 3.0
  * @author   Adam Daniel <adaniel1@eesus.jnj.com>
  * @author   Klaus Guenther <klaus@capitalfocus.org>
- * @since   PHP 4.0.3pl1
+ * @since    PHP 4.0.3pl1
  */
 
 /**
@@ -39,11 +39,20 @@ require_once 'HTML/Common.php';
 class HTML_Page2_Frameset_Frame extends HTML_Common
 {
     var $xhtml;
-    
-    public function HTML_Page2_Frameset_Frame($options = array())
+
+    /**
+     * Constructor.
+     *
+     * Takes options array as a parameter.
+     *
+     * @param array $options Associative array of options.
+     *
+     * @return HTML_Page2_Frameset_Frame
+     */
+    public function __construct($options = [])
     {
         if (isset($options['name'])) {
-            $this->setAttributes(array('name' => $options['name']));
+            $this->setAttributes(['name' => $options['name']]);
         }
         if (isset($options['src'])) {
             $this->setSource($options['src']);
@@ -52,7 +61,14 @@ class HTML_Page2_Frameset_Frame extends HTML_Common
             $this->setTarget($options['target']);
         }
     } // end func constructor
-    
+
+    /**
+     * Set scrolling attribute
+     *
+     * @param string $string Defaults to empty string, to remove attribute.
+     *
+     * @return void
+     */
     public function setScrolling($string = '')
     {
         if ($string !== '') {
@@ -61,26 +77,52 @@ class HTML_Page2_Frameset_Frame extends HTML_Common
             $this->removeAttribute('scrolling');
         }
     } // end func setScrolling
-    
+
+    /**
+     * Set logdesc attribute
+     *
+     * @param string $location Location value
+     *
+     * @return void
+     */
     public function setLongDescription($location = '')
     {
-        if ($location !== ''){
+        if ($location !== '') {
             $this->updateAttributes(array('longdesc' => $location));
         } else {
             $this->removeAttribute('longdesc');
         }
     } // end func setSource
-    
+
+    /**
+     * Set src attribute
+     *
+     * @param string $location Location value
+     *
+     * @return void
+     */
     public function setSource($location)
     {
         $this->updateAttributes(array('src' => $location));
     } // end func setSource
-    
+
+    /**
+     * Set target attribute.
+     *
+     * @param string $name Defaults to _self
+     *
+     * @return void
+     */
     public function setTarget($name = '_self')
     {
         $this->updateAttributes(array('target' => $name));
     } // end func setTarget
-    
+
+    /**
+     * Get HTML for frame tag.
+     *
+     * @return string
+     */
     public function toHtml()
     {
         if ($this->xhtml === true) {
@@ -89,7 +131,7 @@ class HTML_Page2_Frameset_Frame extends HTML_Common
             $tagEnd = '>';
         }
         $strHtml = '<frame ' . $this->getAttributes(true) . $tagEnd;
-        
+
         return $strHtml;
     } // end func toHtml
 }
