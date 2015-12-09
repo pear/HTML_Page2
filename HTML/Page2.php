@@ -431,7 +431,7 @@ class HTML_Page2 extends HTML_Common
         }
 
         if (isset($attributes['doctype'])) {
-            if ($attributes['doctype'] == 'none') {
+            if ($attributes['doctype'] === 'none') {
                 $this->_simple = true;
             } elseif ($attributes['doctype']) {
                 $this->setDoctype($attributes['doctype']);
@@ -724,30 +724,26 @@ class HTML_Page2 extends HTML_Common
 
         // Generate script file links
         foreach ($this->_scripts as $strSrc => $strType) {
-            if (is_string($strType))
-            {
+            if (is_string($strType)) {
                 $strHtml .= $tabs . $tab
                     . "<script type=\"$strType\" src=\"$strSrc\"></script>" . $lnEnd;
-            }
-            elseif (is_array($strType))
-            {
-                $type = isset($strType['type']) ? $strType['type'] : 'text/javascript';
-                $execute = isset($strType['execute']) ? $strType['execute'] : 'immediate';
+            } elseif (is_array($strType)) {
+                $type = isset($strType['type']) ?
+                    $strType['type'] : 'text/javascript';
+                $execute
+                    = isset($strType['execute']) ? $strType['execute'] : 'immediate';
 
-                $strHtml .= $tabs . $tab . '<script type="'.$type.'" src="'.$strSrc.'"';
-                if ($execute == 'async' || $execute == 'defer')
-                {
-                    if ($this->_mime == "text/xhtml")
-                    {
+                $strHtml .= $tabs . $tab
+                         . '<script type="'.$type.'" src="'.$strSrc.'"';
+                if ($execute == 'async' || $execute == 'defer') {
+                    if ($this->_mime == "text/xhtml") {
                         $strHtml .= ' '.$execute.'="'.$execute.'"';
-                    }
-                    else
-                    {
+                    } else {
                         $strHtml .= ' '.$execute;
                     }
                 }
-                    $strHtml .= '>';
-                    $strHtml .= '</script>' . $lnEnd;
+                $strHtml .= '>';
+                $strHtml .= '</script>' . $lnEnd;
             }
         }
 
