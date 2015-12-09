@@ -25,10 +25,10 @@ Ideas for use:
   <email>klaus@capitalfocus.org</email>
   <active>yes</active>
  </lead>
- <date>2015-10-21</date>
- <time>21:22:12</time>
+ <date>2015-12-09</date>
+ <time>22:38:12</time>
  <version>
-  <release>0.6.4</release>
+  <release>0.6.5</release>
   <api>0.6.0beta</api>
  </version>
  <stability>
@@ -39,7 +39,8 @@ Ideas for use:
  <notes>
 QA release
 
-Request #20952	Add "getBodyContent()" method
+* Added handling of html5 'defer' and 'async' attributes on 'script' tag with 'src' attribute.
+* Incremental changes for PHP5+ support.
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -61,6 +62,14 @@ Request #20952	Add "getBodyContent()" method
    <file baseinstalldir="/" md5sum="7e0174df3effce51a64bc2370cc09967" name="HTML/Page2/Namespaces.php" role="php" />
    <file baseinstalldir="/" md5sum="b3334907675cc6ab09ee2e12d58880cf" name="HTML/Page2/Frameset/Frame.php" role="php" />
    <file baseinstalldir="/" md5sum="287223e03903a590092979e82e1b44d8" name="README" role="data" />
+   <dir name="tests">
+    <file name="phpunit.xml" role="test">
+     <tasks:replace from="@package_version@" to="version" type="package-info" />
+    </file>
+    <file name="HTMLPage2GetBodyContentTest.php" role="test">
+     <tasks:replace from="@package_version@" to="version" type="package-info" />
+    </file>
+   </dir>
   </dir>
  </contents>
  <dependencies>
@@ -205,6 +214,24 @@ Request #3204	Adding Raw entries to the Header
 QA release
 
 Request #20952	Add "getBodyContent()" method [kguest]
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.6.5</release>
+    <api>0.6.0beta</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2015-12-09</date>
+   <license>PHP License 3.0</license>
+   <notes>
+QA release
+
+* Added handling of html5 'defer' and 'async' attributes on 'script' tag with 'src' attribute.
+* Incremental changes for PHP5+ support.
    </notes>
   </release>
  </changelog>
