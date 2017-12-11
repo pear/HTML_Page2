@@ -415,7 +415,7 @@ class HTML_Page2 extends HTML_Common
      * @since  2.0
      * @return void
      */
-    public function HTML_Page2($attributes = [])
+    public function __construct($attributes = [])
     {
 
         if ($attributes) {
